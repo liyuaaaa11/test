@@ -1,0 +1,4 @@
+// git文件上传时忽略以下文件
+node_modules/
+dist/
+npm-debug.log
