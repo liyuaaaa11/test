@@ -13,9 +13,17 @@ exec('node -v', (err, stdout, stderr) => {
 const nodeVersion = execSync('node -v')
 console.log(nodeVersion.toString())
 
-// 执行软件交互
-execSync('start chrome http://www.baidu.com') // windows系统下
-execSync('')
+// // 执行软件交互
+execSync("start chrome http://www.baidu.com", (err, stdout) => {
+  if (err) {
+    console.log('***', err)
+  }
+}) // windows系统下
+execSync("open -a 'Google Chrome' http://www.baidu.com", (err, stdout) => {
+  if (err) {
+    console.log('***', err)
+  }
+}) // mac系统下
 
 // 3. spawn 没有字节上限 返回数据是个流 实时返回
 // spawn包含3个参数，第一个为执行shell命令；第二个数组为传递参数；options配置项
@@ -34,9 +42,12 @@ stdout.on('close', msg => {
 
 // 4.execFile 执行可执行文件
 const path = require('node:path')
-console.log(',&&&&', path.resolve(__dirname, './index.sh'))
-execFile(path.resolve(__dirname, './global/child_process/index.sh'), null, (err, stdout) => {
-  console.log('00000,', stdout.toString())
+execFile(path.resolve(__dirname, './index.sh'), null, (err, stdout, stderr) => {
+  if (err) {
+    console.log('执行脚本出错：', err)
+    return err
+  }
+  console.log('00000,', stdout)
 })
 
 
