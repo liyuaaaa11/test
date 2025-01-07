@@ -2,6 +2,6 @@
 echo '开始'
 mkdir test
 cd ./test
-echo console.log('这是一项测试') >test.js
+echo console.log('hello world') >test1.js
 echo '结束'
-node test.js
+node test1.js

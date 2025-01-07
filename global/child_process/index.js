@@ -13,25 +13,32 @@ exec('node -v', (err, stdout, stderr) => {
 const nodeVersion = execSync('node -v')
 console.log(nodeVersion.toString())
 
-// // 执行软件交互
-execSync("start chrome http://www.baidu.com", (err, stdout) => {
-  if (err) {
-    console.log('***', err)
-  }
-}) // windows系统下
-execSync("open -a 'Google Chrome' http://www.baidu.com", (err, stdout) => {
-  if (err) {
-    console.log('***', err)
-  }
-}) // mac系统下
+// 执行软件交互
+// 检测当前处于什么操作系统
+const os = require('os')
+console.log(os.platform())
+// 若当前为windows系统
+if (os.platform() === 'win32') {
+  execSync("start chrome http://www.baidu.com", (err, stdout) => {
+    if (err) {
+      console.log('***', err)
+    }
+  })
+} else {
+  execSync("open -a 'Google Chrome' http://www.baidu.com", (err, stdout) => {
+    if (err) {
+      console.log('***', err)
+    }
+  })
+}
 
 // 3. spawn 没有字节上限 返回数据是个流 实时返回
 // spawn包含3个参数，第一个为执行shell命令；第二个数组为传递参数；options配置项
 // spawnSync使用较少
-const a = execSync('netstat') // 等所有数据都接收完成后才返回
+const a = execSync('netstat') //获取整个系统的所有网络状况 等所有数据都接收完成后才返回
 console.log(a)
 const { stdout } = spawn('netstat', ['-a'], {
-  
+  // options配置项
 })
 stdout.on('data', msg => {
   console.log(msg.toString())
@@ -42,7 +49,9 @@ stdout.on('close', msg => {
 
 // 4.execFile 执行可执行文件
 const path = require('node:path')
-execFile(path.resolve(__dirname, './index.sh'), null, (err, stdout, stderr) => {
+const os = require('os')
+const filePath = path.resolve(__dirname, os.platform() === 'win32' ? './bat.cmd': './index.sh') 
+execFile(filePath, null, (err, stdout, stderr) => {
   if (err) {
     console.log('执行脚本出错：', err)
     return err
