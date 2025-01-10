@@ -8,3 +8,7 @@ Failed during: /usr/bin/git remote set-head origin --auto
 原因：macos系统安全升级后禁止直接执行远程脚本，添加git全局配置
 git config --global http.sslBackend "openssl"
 git config --global http.proxy "socksS://127.0.0.1:6666"
+撤销gitconfig配置：
+git config --global --unset http.sslBackend
+git config --global --unset http.proxy
+// 抽空研究大文件上传
