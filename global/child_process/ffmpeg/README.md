@@ -13,7 +13,7 @@ git config --global http.proxy "socksS://127.0.0.1:6666"
 git config --global --unset http.sslBackend
 git config --global --unset http.proxy
 ```
-**抽空研究大文件上传** 
+**抽空研究大文件上传** <br/>
 2. 转换视频格式
 ```
 // 1.不同视频格式转换
@@ -50,6 +50,7 @@ execSync(`ffmpeg -i ${videoPath} -ss 0 -to 1 -t 2 ${outVideoPath2}`, {
 }) // 这里会截取0-2s的视频
 ```
 4. -vf 添加/删除水印
+<br/>
 ffmpeg -filters // 查询更多API
 ```
 // 添加文本类型水印
