@@ -13,6 +13,15 @@ git config --global http.proxy "socksS://127.0.0.1:6666"
 git config --global --unset http.sslBackend
 git config --global --unset http.proxy
 ```
+* brew基本使用
+  > 安装 brew install ffmpeg
+  > 卸载 brew uninstall ffmpeg
+  > 更新 brew upgrade ffmpeg
+  > 查看安装软件 brew list
+  > 查看软件信息 brew info ffmpeg
+  > 自检 brew doctor
+  > 搜索软件 brew search ffmpeg
+  
 **抽空研究大文件上传** <br/>
 2. 转换视频格式
 ```
