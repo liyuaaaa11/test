@@ -1,7 +1,8 @@
-import util, { parseArgs } from 'node:util';
+import util from 'node:util';
 import { exec } from 'node:child_process';
 
 // 1. util.promisify
+//
 // 原始调用方式
 exec('node -v', (err, stdout, stderr) => {
   // 接受回调函数，参数分别是错误信息，标准输出和标准错误输出
@@ -44,3 +45,45 @@ execPromise('node -v').then(res => {
 })
 
 // 2. util.callbackify
+// 将promise函数转换为回调函数
+const func = (type) => {
+  if (type === 'success') {
+    return Promise.resolve('成功')
+  } else {
+    return Promise.reject('失败')
+  }
+}
+const callbackfunc = util.callbackify(func)
+callbackfunc('success', (err, res) => {
+  if (err) {
+    console.error('util.callbackify：', err)
+  } else {
+    console.log('util.callbackify：',res)
+  }
+})
+
+// 自定义实现callbackify
+const callbackify = (fun) => {
+  return (...args) => {
+    const callback = args.pop() //获取args最后一个参数(即回调函数)
+    fun(...args).then(res => {
+      callback(null, res)
+    }).catch(err => {
+      callback(err)
+    })
+  }
+}
+const callbackFunc = callbackify(func)
+callbackFunc('success', (err, res) => {
+  if (err) {
+    console.error('自定义callbackify：', err)
+  } else {
+    console.log('自定义callbackify：', res)
+  }
+})
+
+// 3. util.format 格式化字符串 类似于c语言的printf
+// %s 字符串 %d 数字 %j json对象
+console.log(util.format('%s:%s;--%s:%d', 'name', 'xsanjin', 'age', 18)) // name:xsanjin;--age:18
+
+
