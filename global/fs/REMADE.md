@@ -1,4 +1,5 @@
 ### fs
+**fs IO操作都是由libuv完成后才推入V8事件队列中；各种计时器(setImmediate、setTimeout等)都是由V8事件循环完成**
 * 前置准备 引入node内置的fs、path模块
 > const fs = require('node:fs')
 > const path = require('node:path')
@@ -45,3 +46,22 @@ readStream.on('end', () => {
   console.log('end')
 })
 ```
+
+3. 创建/删除文件夹
+* 同步方式 类似于Linux命令
+> fs.mkdirSync('文件目录', { recursive: true // 是否递归创建文件夹 })
+> fs.rmSync('文件目录', { recursive: true // 是否递归删除文件夹 })
+
+4. 修改文件名
+> fs.renameSync(初始文件名, 新文件名)
+
+5. 监听文件变化
+```
+fs.watch(filePath, (event, filename) => {
+  console.log('**event**', event, '**filename**',filename)
+})
+```
+
+6. 源码地址
+>  http://github.com/libuv/libuv
+fs通过c++层的FSReqCallback类，对libuv的uv_fs_t的封装，即将fs的参数透传 给libuv层

@@ -44,3 +44,24 @@ readStream.on('data', (chunk) => {
 readStream.on('end', () => {
   console.log('end')
 })
+
+// 3. mkdirSync/rmSync 创建/删除文件夹
+// 类似linux命令
+const mkdir = path.resolve(__dirname, './test/test1')
+const rm = path.resolve(__dirname, './test')
+console.log(mkdir)
+fs.mkdirSync(mkdir, {
+  recursive: true // 是否递归创建文件夹
+})
+// fs.rmSync(rm, {
+//   recursive: true // 是否递归删除文件夹
+// })
+
+// 4. 修改文件名称
+const rename = path.resolve(__dirname, './test/test2')
+fs.renameSync(mkdir, rename)
+
+// 5. 监听文件变化
+fs.watch(filePath, (event, filename) => {
+  console.log('**event**', event, '**filename**',filename)
+})
