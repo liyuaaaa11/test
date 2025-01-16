@@ -62,6 +62,33 @@ const rename = path.resolve(__dirname, './test/test2')
 fs.renameSync(mkdir, rename)
 
 // 5. 监听文件变化
-fs.watch(filePath, (event, filename) => {
+const writePath = path.resolve(__dirname, './test/test.txt')
+fs.watch(writePath, (event, filename) => {
   console.log('**event**', event, '**filename**',filename)
+})
+
+// 6. 写入文件
+fs.writeFileSync(writePath, '\nhello world', {
+  encoding: 'utf-8',
+  flag: 'a' // 追加写入
+})
+// 该方法不会替换原始内容
+fs.appendFileSync(writePath, '\nunshift创始人')
+
+// 7. 创建可写流
+// 处理大量数据分批插入
+let arr = [
+  '待到秋来九月八，',
+  '我花开后百花杀。',
+  '冲天香阵透长安，',
+  '满城尽带黄金甲。',
+] 
+
+const writeReadStrem = fs.createWriteStream(writePath)
+arr.forEach(item => {
+  writeReadStrem.write(item + '\n')
+})
+writeReadStrem.end() // 结束写入
+writeReadStrem.on('finish', () => {
+  console.log('写入完成')
 })

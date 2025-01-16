@@ -62,6 +62,36 @@ fs.watch(filePath, (event, filename) => {
 })
 ```
 
-6. 源码地址
+6. 写入文件
+* writeFileSync(文件路径, 写入内容)
+> 文件未进行配置时，写入的内容会替换文件原内容；
+> 需设置options，即writeFileSync(文件路径, 写入内容, {flag: 'a'})
+options的可选项encoding: 编码方式; falg: mode权限;<b/>
+* appendFileSync(文件路径, 写入内容)
+> 该方式不会替换原始内容
+
+7. 处理大量数据插入
+```
+// 创建可写流
+const writeReadStrem = fs.createWriteStrem(文件路径)
+let arr = [
+  '待到秋来九月八，',
+  '我花开后百花杀。',
+  '冲天香阵透长安，',
+  '满城尽带黄金甲。',
+]
+arr.forEach(item => {
+  writeReadStrem.write('item')
+})
+
+wirteReadStrem.end() // 结束写入
+
+// 监听写入结束
+writeReadStrem.on('finish', () => {
+  console.log('写入完成')
+})
+```
+
+8. 源码地址
 >  http://github.com/libuv/libuv
 fs通过c++层的FSReqCallback类，对libuv的uv_fs_t的封装，即将fs的参数透传 给libuv层
