@@ -92,3 +92,13 @@ writeReadStrem.end() // 结束写入
 writeReadStrem.on('finish', () => {
   console.log('写入完成')
 })
+
+// 8. 软连接与硬连接
+// 硬连接 linkSync(原始地址，硬连接之后的地址)
+// 两个文件共享同一个储存地址 备份文件，删除一个文件，另一个文件还存在
+fs.linkSync(writePath, path.resolve(__dirname, './test/test3.txt'))
+
+// 软连接 symlinkSync(原始地址，软连接之后的地址)
+// 需要管理员权限，类似windows快捷方式
+// 删除原始文件，软连接文件也会失效
+fs.symlinkSync(writePath, path.resolve(__dirname, './test/test4.txt'))

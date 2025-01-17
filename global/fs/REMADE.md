@@ -92,6 +92,20 @@ writeReadStrem.on('finish', () => {
 })
 ```
 
-8. 源码地址
+8. 软连接与硬连接(pnpm底层原理)
+* 软连接 symlinkSync(原始地址, 软连接后的地址)
+> 执行代码需要管理员权限，类似于windows的快捷方式；
+> 删除原始文件时，软连接文件无法打开；
+```
+fs.symlinkSync(原始路径, 软连接后的路径)
+```
+* 硬连接 linkSync(原始地址,  硬连接后的地址)
+> 两个文件共享同一个储存地址, 内容同时更新；可用于备份文件；
+> 删除一个文件后，另一个文件不受影响；
+```
+fs.linkSync(原始地址, 硬连接后的地址)
+```
+
+9. 源码地址
 >  http://github.com/libuv/libuv
 fs通过c++层的FSReqCallback类，对libuv的uv_fs_t的封装，即将fs的参数透传 给libuv层
