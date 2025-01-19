@@ -1,0 +1,22 @@
+{
+  "name": "test_cli",
+  "version": "1.0.0",
+  "description": "1. 自定义的命令 **非node执行脚本操作** 2. 用户基本操作 3. 下载模版",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "test-cli-xsanjin": "src/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^13.0.0",
+    "download-git-repo": "^3.0.2",
+    "inquirer": "^12.3.2",
+    "ora": "^8.1.1"
+  }
+}
