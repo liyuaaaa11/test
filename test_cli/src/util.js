@@ -16,8 +16,9 @@ export const downloadTemp = (branch, name) => {
   return new Promise((resolve, reject) => {
     // 执行加载动画
     spinner.start()
-    // 第一个参数：下载载模版git地址(前缀➕direct:, #拼接分支branch-name) 
-    download(`direct:https://github.com/liyuaaaa11/swift.git/#${branch}`, name, {clone: true}, function (err) {
+    // 第一个参数：下载载模版git地址(前缀➕direct:, #拼接分支branch-name)
+    // 第二个参数：目录
+    download(`direct:https://github.com/liyuaaaa11/best_wishes.git/#${branch}`, name, {clone: true}, function (err) {
       if (err) return reject
       spinner.succeed('下载完成')
       return resolve

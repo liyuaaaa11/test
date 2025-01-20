@@ -3,7 +3,7 @@
 import { program } from 'commander';
 // 命令行交互工具
 import inquirer from 'inquirer'
-import { checkPath } from './util.js'
+import { checkPath, downloadTemp } from './util.js'
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -16,11 +16,7 @@ console.log('Hello, world!');
 // 定义命令行操作
 // 1.设置版本号
 program.version(json.version);
-// 2. 创建模版
-
-
-// 接收命令行参数并解析
-program.parse(process.argv);
+// 2. 基于已有git模版创建项目
 program.command('create <projectName>'). // 创建模版命令 传入projectName参数
   alias('project') // 命令别名
   .description('创建项目') // 描述命令作用
@@ -35,8 +31,8 @@ program.command('create <projectName>'). // 创建模版命令 传入projectName
       },
       {
         type: 'confirm',
-        name: 'isTs',
-        message: '请确认是否选用TS模版'
+        name: 'isVue',
+        message: '请确认是否选用Vue模版'
       }
     ]).then(res => {
       // 获取命令行交互的参数
@@ -46,10 +42,13 @@ program.command('create <projectName>'). // 创建模版命令 传入projectName
         console.log(res.projectName, '文件夹已存在')
         return
       }
-      if (res.isTs) {
-        
+      if (res.isVue) {
+        downloadTemp('vue', projectName)
       }
     })
 
     console.log(projectName)
   }) // 获取参数 
+
+// 接收命令行参数并解析
+program.parse(process.argv);
