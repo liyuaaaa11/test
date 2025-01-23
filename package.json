@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "学习nodejs专用包",
   "main": "index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "predev-node": "node prev.js",
     "dev-node": "node index.js",
