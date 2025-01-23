@@ -24,7 +24,8 @@ const init = () => {
     content: mdToHTML,
     title: 'markdown to html'
   }, (err, data) => {
-    console.log(data)
+    if (err) throw err
+    fs.writeFileSync(path.resolve(__dirname, 'index.html'), data)
   }) 
 
 }

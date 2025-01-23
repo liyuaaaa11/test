@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>markdown to html</title>
+</head>
+<body>
+  <!-- title和content类似于占位符 -->
+  <h3>markdown转html</h3>
+<ul>
+<li>主要第三方库<blockquote>
+<p>ejs: js模块引擎，实现html动态嵌入新内容，将markdown转为美观的html页面<br/>
+marked: markdown解析器和编译器，将markdown语法转为html标记<br>
+browserSync: 实时预览和同步网友更改；当markdown文件进行编辑并将其转换html时会自动刷新浏览器</p>
+</blockquote>
+</li>
+</ul>
+<h4>前期准备</h4>
+<p><strong>创建.ejs模版文件</strong></p>
+<pre><code class="language-ejs">// 1. 纯脚本标签 可以写任意js用于流程控制，无任何输出 
+&lt;% code %&gt; 
+// 2. 输出经过html转义的内容
+// 变量中包含&#39;&lt;&#39;、&#39;&gt;&#39;、&#39;&amp;&#39;会转义成字符实体，&amp;lt; &amp;gt; &amp;amp等
+// 注意：使用 &lt;%= 最好保证里面内容没有html字符
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;&lt;%= title %&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- title和content类似于占位符 --&gt;
+  &lt;%- content %&gt;
+  &lt;%= value&gt; // 变量
+  &lt;%= a ? b : c %&gt; 表达式
+  &lt;%= a + b %&gt;
+  &lt;%- a %&gt; 插入html代码
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>引入第三方库</strong></p>
+<pre><code class="language-js">import ejs from &#39;ejs&#39;
+import fs from &#39;fs&#39;
+import marked from &#39;marked&#39; // 获取编译后的html代码
+</code></pre>
+<ol>
+<li>读取文件内容</li>
+</ol>
+<pre><code class="language-js">const init = () =&gt; {
+  // 1. 读取md内容
+  console.log(path.resolve(__dirname, &#39;./README.md&#39;))
+  const content = fs.readFileSync(path.resolve(__dirname, &#39;./README.md&#39;), &#39;utf-8&#39;)
+  console.log(&#39;markdown内容；&#39;, content)
+  // 2. 将markdown内容转为html代码
+  const mdToHTML = marked.parse(content)
+  console.log(&#39;转为html后的markdown内容：&#39;, mdToHTML)
+  // 3.  renderFile读取.ejs文件
+  // 参数1: 读取.ejs路径
+  // 参数2；options配置项，即读取内容
+  ejs.renderFile(&#39;./template.ejs&#39;, {
+  })
+}
+// 一定要结尾处调用！！！！
+init()
+</code></pre>
+
+</body>
+</html>
