@@ -38,17 +38,21 @@ import marked from 'marked' // 获取编译后的html代码
 1. 读取文件内容
 ```js
 const init = () => {
-  // 读取md内容
-  const content = fs.readFileSync('./README.md', 'utf-8')
+  // 1. 读取md内容
+  console.log(path.resolve(__dirname, './README.md'))
+  const content = fs.readFileSync(path.resolve(__dirname, './README.md'), 'utf-8')
   console.log('markdown内容；', content)
-  // renderFile读取.ejs文件
+  // 2. 将markdown内容转为html代码
+  const mdToHTML = marked.parse(content)
+  console.log('转为html后的markdown内容：', mdToHTML)
+  // 3.  renderFile读取.ejs文件
   // 参数1: 读取.ejs路径
   // 参数2；options配置项，即读取内容
   ejs.renderFile('./template.ejs', {
-
   })
-
 }
+// 一定要结尾处调用！！！！
+init()
 
 ```
 
