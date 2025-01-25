@@ -13,13 +13,28 @@ const __dirname = path.dirname(__filename)
 2. gzip压缩/解压
 **createGzip 压缩文件**
 ```
-const readStream = createReadStream(path.resolve(__dirname, 'index.txt'))
-const writeStream = createWriteStream(path.resolve(__diename, 'index.txt.gz'))
+const readStream = fs.createReadStream(path.resolve(__dirname, 'index.txt'))
+const writeStream = fs.createWriteStream(path.resolve(__dirname, 'index.txt.gz'))
 readStream.pipe(zlib.createGzip()).pipe(writeStream)
 ```
 **createGunzip 解压文件**
 ```
-const readGunStream = createReadStream(path.resolve(__dirname, 'index.txt'))
-const writeGunStream = createWriteStream(path.resolve(__diename, 'index.txt.gz'))
+const readGunStream = fs.createReadStream(path.resolve(__dirname, 'index.txt'))
+const writeGunStream = fs.createWriteStream(path.resolve(__dirname, 'index.txt.gz'))
 readGunStream.pipe(zlib.createGzip()).pipe(writeGunStream)
+```
+* 遗留问题
+> 思考压缩和解压同时调用createReadStream()会报错
+3. deflate压缩/解压
+**createDeflate 压缩文件**
+```
+const readStream = fs.createReadStream(path.resolve(__dirname, 'index.txt'))
+const writeStream = fs.createWriteStream(path.resolve(__dirname, 'index.txt.deflate'))
+readStream.pipe(zlib.createDeflate()).pipe(writeStream)
+```
+**createInflate 解压文件**
+```
+const readInflateStream = fs.createReadStream(path.resolve(__dirname, 'index.txt.deflate'))
+const writeInflateStream = fs.createWriteStream(path.resolve(__dirname, 'index3.txt'))
+readInflateStream.pipe(zlib.createInflate()).pipe(writeInflateStream)
 ```
