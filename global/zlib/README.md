@@ -11,6 +11,8 @@ const __filename = fileURLToPath(improt.mate.url)
 const __dirname = path.dirname(__filename)
 ```
 2. gzip压缩/解压
+* 适用于文件压缩
+> 使用LZ77(数据的重复字符串的替换和引用)和哈夫曼编码(进一步压缩数据)，压缩速度慢于deflate压缩
 **createGzip 压缩文件**
 ```
 const readStream = fs.createReadStream(path.resolve(__dirname, 'index.txt'))
@@ -26,6 +28,8 @@ readGunStream.pipe(zlib.createGzip()).pipe(writeGunStream)
 * 遗留问题
 > 思考压缩和解压同时调用createReadStream()会报错
 3. deflate压缩/解压
+* 适用于网络传输和http响应的内容编码
+>压缩速度更快，文件体积比gzip压缩要小
 **createDeflate 压缩文件**
 ```
 const readStream = fs.createReadStream(path.resolve(__dirname, 'index.txt'))
