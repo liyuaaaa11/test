@@ -44,7 +44,7 @@ const __dirname = path.dirname(__filename) //获取目录名称
 
 1. 读取文件内容
 ```js
-const init = () => {
+const init = (callback) => {
   // 1. 读取md内容
   console.log(path.resolve(__dirname, './README.md'))
   const content = fs.readFileSync(path.resolve(__dirname, './README.md'), 'utf-8')
@@ -63,11 +63,13 @@ const init = () => {
     // 将插入md内容的模版文件写入html
     // 引入gitgithub-markdown.css文件添加md样式
     fs.writeFileSync(path.resolve(__dirname, 'index.html'), data)
-    server()
+    callback && callback()
   })
 } 
 // 一定要结尾处调用！！！！
-init()
+init(() => {
+  server()
+})
 ```
 
 2. 添加浏览器热更新
@@ -84,5 +86,12 @@ const server = () => {
     }
   })
 }
+fs.watchFile(path.resolve(__dirname, 'README.md'), (curr, prve) => {
+  if (curr.time !== prve.time) {
+    init(() => {
+      browser.reload()
+    })
+  }
+})
 ```
 
