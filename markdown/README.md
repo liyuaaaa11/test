@@ -31,8 +31,15 @@
 **引入第三方库**
 ```js
 import ejs from 'ejs'
-import fs from 'fs'
 import marked from 'marked' // 获取编译后的html代码
+import browserSync form 'browser-sync'
+
+// e模版无法直接使用__dirname,利用nodejs的pat、urlh模块返回文件的完全解析路径
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __filename = fileURLToPath(import.meta.url) // 获取文件的解析路径
+const __dirname = path.dirname(__filename) //获取目录名称
 ```
 
 1. 读取文件内容
@@ -49,10 +56,33 @@ const init = () => {
   // 参数1: 读取.ejs路径
   // 参数2；options配置项，即读取内容
   ejs.renderFile('./template.ejs', {
+    title: 'md转义html',
+    content: mdToHTML
+  }, (err, data) => {
+    if (err) return err
+    // 将插入md内容的模版文件写入html
+    // 引入gitgithub-markdown.css文件添加md样式
+    fs.writeFileSync(path.resolve(__dirname, 'index.html'), data)
+    server()
   })
-}
+} 
 // 一定要结尾处调用！！！！
 init()
+```
 
+2. 添加浏览器热更新
+```
+let browser;
+const server = () => {
+  // 创建一个服务
+  browser = browserSync.create()
+  // 初始化服务
+  browser.init({
+    server: {
+      baseDir: './', // 配置根目录
+      index: 'index.html' // 指向生成的html文件
+    }
+  })
+}
 ```
 
