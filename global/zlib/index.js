@@ -7,4 +7,4 @@ const __dirname = path.dirname(__filename) //获取目录名称
 
 const readStream = fs.createReadStream(path.resolve(__dirname, 'index.txt'))
 const writeStream = fs.createWriteStream(path.resolve(__dirname, 'index.txt.gz'))
-readStream.pipe(zlib.createGunzip()).pipe(writeStream)
+readStream.pipe(zlib.createGzip()).pipe(writeStream)
