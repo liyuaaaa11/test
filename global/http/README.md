@@ -4,9 +4,11 @@
 > 构建RESTful API
 > 代理服务器 proxy代理
 > 文件服务器或者动静分离
-
-1. 请求方式(研究RESTful请求风格)
+1. 基础使用
+前端主要使用ajax fetch axios三种方式
+**请求方式(研究RESTful请求风格)**
 * POST GET PUT DELETE PATCH OPTIONS HEAD...
-2. 路由
+**路由**
 * http://loaclhost:38/login  /api/list
-3. GET和POST传参
+**GET和POST传参**
+2.创建http服务器
