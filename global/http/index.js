@@ -9,10 +9,21 @@ const methodObject = {
 }
 http.createServer((req, res) => {
   // 🧪url解析请求地址，根据不同的路径返回不同结果
-  const { pathName } = url.parse(req.url)
-  if (pathName === '/login') {
-    res.statusCode = 200
-    res.end(methodObject[req.method])
+  const { pathname } = url.parse(req.url)
+  console.log(pathname)
+  if (pathname === '/login') {
+    // 前端发过来的内容是数据流 需要对其进行处理
+    let data = ''
+    // 监听请求data方法
+    req.on('data', (chunk) => {
+      data += chunk
+    })
+    // 监听data结束
+    req.on('end', () => {
+      res.setHeader('Content-Type', 'application/json')
+      res.statusCode = 200
+      res.end(data)
+    })
   } else {
     res.statusCode = 404
     res.end('404')
