@@ -3,7 +3,7 @@ POST http://localhost:98/login HTTP/1.1
 Content-Type: application/json
 
 {
+  "id": 1,
   "name": 'xsanjin'
 }
 
-# GET  http://localhost:98/get?name=xsanjin HTTP/1.1

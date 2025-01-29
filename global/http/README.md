@@ -12,3 +12,8 @@
 * http://loaclhost:38/login  /api/list
 **GET和POST传参**
 2.创建http服务器
+```
+import http from 'node:http'
+import url from 'node:url'
+...........................≥≥≥≥≥≥≥≥≥......
+```

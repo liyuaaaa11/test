@@ -1,0 +1,2 @@
+
+GET  http://localhost:98/getUserInfo?id=1 HTTP/1.1
