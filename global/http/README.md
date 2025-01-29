@@ -90,3 +90,7 @@ http.createServer((req, res) => {
 ```
 * 基于REST Client插件创建.http类型的文件模拟接口请求
 > login.html 登录接口post请求  getUserInfo.html 获取用户信息get请求
+3. 代理服务器
+客户端(api) -> 代理服务器 -> 服务器<br>
+服务器可以有一个或多个，可以用做负载均衡、高可用(将请求转发到多个服务器上，提供冗余和故障转移)、缓存和性能优化、安全性、域名或路径重写
+* 安装http-proxy-middleware模块
