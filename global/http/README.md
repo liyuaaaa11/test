@@ -95,3 +95,40 @@ http.createServer((req, res) => {
 客户端(api) -> 代理服务器 -> 服务器<br>
 服务器可以有一个或多个，可以用做负载均衡、高可用(将请求转发到多个服务器上，提供冗余和故障转移)、缓存和性能优化、安全性、域名或路径重写
 * 安装http-proxy-middleware模块
+**出现问题及解决思路** <br>
+1. The requested module './xsanjin.config.js' does not provide an export named 'default'
+**引入文件**
+```js
+improt config from './xsanjin.config.js'
+```
+**配置文件**
+```json
+module.exports = {
+  serve: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true
+      },
+      '/xsanjin/api': {
+        target: 'http://localhost:6666',
+        changeOrigin: true
+      }
+    }
+  }
+}
+```
+出现原因：以这种方式编写时，如果不带括号，它会导致编译器查找默认导出。无论它找到什么作为默认导出，都将成为config导出；
+解决方式：
+* a.当模块有命名的导出，可以使用解构赋值按需导入
+* b.使用*将所有内容导入
+> improt * as config from './xsanjin.config.js'
+2. ReferenceError: module is not defined in ES module scope
+This file is being treated as an ES module because it has a '.js' file extension and '/Users/liyu/Desktop/project/nodejs/package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.
+解决方式：
+* a.修改配置文件package.json，将type: 'module'改为type: 'commonjs'
+* b.在es模块中定义require，并使用它导入commonjs库
+```js
+import {createReqire} from 'module'
+const require = createRequire(import.meta.url)
+```

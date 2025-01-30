@@ -3,6 +3,7 @@ import url from 'node:url'
 import path from 'node:path'
 import http from 'node:http'
 import { createProxyMiddleware } from 'http-proxy-middleware'
+import * as config  from './xsanjin.config.cjs'
 
 const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.resolve(__filename)
@@ -10,9 +11,10 @@ const html = fs.readFileSync(path.resolve(__dirname, './../index.html'))
 
 // 检测代理端口是否存在
 function proxyCheck(pathname) {
-  const config = require(path.resolve(__dirname, './xsanjin.config.js'))
-  const proxyList = Object.keys(config.serve.proxy)
-  console.log(proxyList)
+  // const config = fs.readFileSync(path.resolve(__dirname, './../xsanjin.config.js'))
+  console.log(config.default.serve)
+  const proxyList = Object.keys(config.default.serve.proxy)
+  console.log(config,proxyList)
   console.log('当前端口是否存在', proxyList.includes(pathname))
   return proxyList.includes(pathname)
 }
@@ -32,10 +34,9 @@ http.createServer((req, res) => {
   res.writeHead('200', {
     "content-type": 'text/html'
   })
-  res.end(html)
   const { pathname, query } = url.parse(req.url, true)
-  if (!proxyCheck(pathname)) return
-  const proxy = createProxyMiddleware(config.serve.proxy[pathname])
+  if (!proxyCheck(pathname)) return res.end(html)
+  const proxy = createProxyMiddleware(config.default.serve.proxy[pathname])
   proxy(req, res)
   if (req.method === 'POST' && pathname === '/api') {
     let data = ''
