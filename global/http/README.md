@@ -5,14 +5,14 @@
 > 代理服务器 proxy代理
 > 文件服务器或者动静分离
 1. 基础使用
-前端主要使用ajax fetch axios三种方式
+前端主要使用ajax fetch axios三种方式<br>
 **请求方式(研究RESTful请求风格)**
-* POST GET PUT DELETE PATCH OPTIONS HEAD...
+* POST GET PUT DELETE PATCH OPTIONS HEAD...<br>
 **路由**
-* http://loaclhost:38/login  /api/list
-**GET和POST传参**
+* http://loaclhost:38/login  /api/list<br>
+**GET和POST传参**<br>
 2.创建http服务器
-```
+```js
 import http from 'node:http'
 import url from 'node:url'
 
@@ -91,6 +91,7 @@ http.createServer((req, res) => {
 * 基于REST Client插件创建.http类型的文件模拟接口请求
 > login.html 登录接口post请求  getUserInfo.html 获取用户信息get请求
 3. 代理服务器
+**主要内容在同一目录层级下的proxy模块中**<br>
 客户端(api) -> 代理服务器 -> 服务器<br>
 服务器可以有一个或多个，可以用做负载均衡、高可用(将请求转发到多个服务器上，提供冗余和故障转移)、缓存和性能优化、安全性、域名或路径重写
 * 安装http-proxy-middleware模块
