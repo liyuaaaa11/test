@@ -6,14 +6,18 @@ import { createProxyMiddleware } from 'http-proxy-middleware'
 
 const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.resolve(__filename)
-// const html = fs.readFileSync(path.resolve(__dirname, './index.html'))
+const html = fs.readFileSync(path.resolve(__dirname, './../index.html'))
 
+// 检测代理端口是否存在
 function proxyCheck(pathname) {
   const config = require(path.resolve(__dirname, './xsanjin.config.js'))
   const proxyList = Object.keys(config.serve.proxy)
+  console.log(proxyList)
+  console.log('当前端口是否存在', proxyList.includes(pathname))
   return proxyList.includes(pathname)
 }
 
+// 检测是否存在该用户
 function userCheck(data) {
   const { userlist } = path.resolve(__dirname, './user.json')
   console.log(data, userlist)
@@ -28,9 +32,7 @@ http.createServer((req, res) => {
   const { pathname, query } = url.parse(req.url, true)
   if (!proxyCheck(pathname)) return
   const proxy = createProxyMiddleware(config.serve.proxy[pathname])
-  proxy(req, res, (err) => {
-    return err
-  })
+  proxy(req, res)
   if (req.method === 'POST' && pathname === '/api') {
     let data = ''
     req.on('data', chunk => {
@@ -40,12 +42,15 @@ http.createServer((req, res) => {
       req.on('end', () => {
         res.end(data)
       })
+    } else {
+      res.statusCode = 200
+      res.end('不存在该用户')
     }
-  // res.end(html)
   } else {
     res.statusCode = 404
     res.end('404～ 当前暂无此功能，待后续研发！')
   }
+  res.end(html)
 }).listen(80, () => {
   console.log('80端口启动成功')
 })
