@@ -29,6 +29,10 @@ function userCheck(data) {
 }
 
 http.createServer((req, res) => {
+  res.writeHead('200', {
+    "content-type": 'text/html'
+  })
+  res.end(html)
   const { pathname, query } = url.parse(req.url, true)
   if (!proxyCheck(pathname)) return
   const proxy = createProxyMiddleware(config.serve.proxy[pathname])
@@ -50,7 +54,6 @@ http.createServer((req, res) => {
     res.statusCode = 404
     res.end('404～ 当前暂无此功能，待后续研发！')
   }
-  res.end(html)
 }).listen(80, () => {
   console.log('80端口启动成功')
 })
