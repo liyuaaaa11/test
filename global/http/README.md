@@ -95,8 +95,129 @@ http.createServer((req, res) => {
 客户端(api) -> 代理服务器 -> 服务器<br>
 服务器可以有一个或多个，可以用做负载均衡、高可用(将请求转发到多个服务器上，提供冗余和故障转移)、缓存和性能优化、安全性、域名或路径重写
 * 安装http-proxy-middleware模块
+> npm i http-proxy-middleware
+**html页面**
+```html
+// index.html页面
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    fetch('/api').then(res => {
+      res.text()
+    })
+  </script>
+</body>
+</html>
+```
+**建立服务器**
+```js
+// index.js
+import fs from 'node:fs'
+import url from 'node:url'
+import path from 'node:path'
+import http from 'node:http'
+import { createProxyMiddleware } from 'http-proxy-middleware'
+import * as config  from './xsanjin.config.cjs'
+
+const __filename = url.fileURLToPath(import.meta.url)
+const __dirname = path.resolve(__filename)
+const html = fs.readFileSync(path.resolve(__dirname, './../index.html'))
+
+// 检测代理端口是否存在
+function proxyCheck(pathname) {
+  console.log(config.default.serve)
+  const proxyList = Object.keys(config.default.serve.proxy)
+  console.log(config,proxyList)
+  console.log('当前端口是否存在', proxyList.includes(pathname))
+  return proxyList.includes(pathname)
+}
+
+// 检测是否存在该用户
+function userCheck(data) {
+  const { userlist } = path.resolve(__dirname, './user.json')
+  console.log(data, userlist)
+  if (userlist.length === 0) return false
+  const user = userlist.find(item => {
+    return data.name === item.name && item.password == data.password
+  })
+  return user
+}
+
+http.createServer((req, res) => {
+  const { pathname, query } = url.parse(req.url, true)
+  if (!proxyCheck(pathname)) {
+    // file:本地文件无法进行请求，需要利用服务器将html渲染再进行请求
+    res.writeHead('200', {
+      "content-type": 'text/html'
+    })
+    return res.end(html)
+  }
+  // 创建代理服务器，将请求和响应由代理服务器转发给客户端
+  const proxy = createProxyMiddleware(config.default.serve.proxy[pathname])
+  proxy(req, res)
+  if (req.method === 'POST' && pathname === '/api') {
+    let data = ''
+    req.on('data', chunk => {
+      data +=chunk
+    })
+    if (userCheck(data)) {
+      req.on('end', () => {
+        res.end(data)
+      })
+    } else {
+      res.statusCode = 200
+      res.end('不存在该用户')
+    }
+  } else {
+    res.statusCode = 404
+    res.end('404～ 当前暂无此功能，待后续研发！')
+  }
+}).listen(80, () => {
+  console.log('80端口启动成功')
+})
+```
+**建立代理服务器**
+```js
+// proxy.js
+import url from 'node:url'
+import http from 'node:http'
+
+http.createServer((req, res) => {
+  const { pathname } = url.parse(req.url)
+  if (pathname === '/api') {
+    console.log('*****')
+    res.end('proxy success')
+  }
+}).listen(3000, () => {
+  console.log('3000启动成功')
+})
+```
+**配置代理服务器**
+```cjs
+module.exports = {
+  serve: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true
+      },
+      '/xsanjin/api': {
+        target: 'http://localhost:6666',
+        changeOrigin: true
+      }
+    }
+  }
+}
+```
 **出现问题及解决思路** <br>
-1. The requested module './xsanjin.config.js' does not provide an export named 'default'
+* The requested module './xsanjin.config.js' does not provide an export named 'default'
+**源代码**
 **引入文件**
 ```js
 improt config from './xsanjin.config.js'
@@ -123,7 +244,7 @@ module.exports = {
 * a.当模块有命名的导出，可以使用解构赋值按需导入
 * b.使用*将所有内容导入
 > improt * as config from './xsanjin.config.js'
-2. ReferenceError: module is not defined in ES module scope
+* ReferenceError: module is not defined in ES module scope
 This file is being treated as an ES module because it has a '.js' file extension and '/Users/liyu/Desktop/project/nodejs/package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.
 解决方式：
 * a.修改配置文件package.json，将type: 'module'改为type: 'commonjs'
@@ -132,3 +253,4 @@ This file is being treated as an ES module because it has a '.js' file extension
 import {createReqire} from 'module'
 const require = createRequire(import.meta.url)
 ```
+* c.将配置文件更改为.cjs文件，使用解构赋值导入
