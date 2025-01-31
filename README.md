@@ -4,7 +4,7 @@
 <br>
 飞书链接：https://jwaapmat3m5.feishu.cn/wiki/Fmv0wDm7SifqhGk1KQJc479onHE?fromScene=spaceOverview
 <br>
-项目描述：主要描述作者在学习nodejs过程中的记录与思考...作者是基于b站小满大佬(https://www.bilibili.com/video/BV1cV4y1B7P4/?spm_id_from=333.1387.homepage.video_card.click&vd_source=574c824e83a6c903413e9d4d5ab2044f)的视频学习编码基本功能
+项目描述：主要描述作者在学习nodejs过程中的记录与思考...作者是基于b站小满大佬的视频学习编码基本功能(https://www.bilibili.com/video/BV1cV4y1B7P4/?spm_id_from=333.1387.homepage.video_card.click&vd_source=574c824e83a6c903413e9d4d5ab2044f)
 
 ## 项目目录
 --global  全局变量的相关内容
