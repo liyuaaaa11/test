@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "实现动静分离",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "xsanjin",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "mime": "^4.0.6"
+  }
 }
