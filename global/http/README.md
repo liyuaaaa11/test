@@ -260,3 +260,8 @@ const require = createRequire(import.meta.url)
 > 性能优化;提高网站加载速度，static资源借助缓存机制存储在cdn(内容分发网络)或浏览器缓存中，减少网络请求和数据传输的开销
 > 负载均衡;动态请求分发到不同的服务器或服务上，平衡服务器的负载，提高系统的可伸缩和容错性
 > 安全性;static资源可以公开访问的，动态请求处理敏感数据或需要特定身份验证和授权，方便系统管理访问控制和安全策略
+
+**出现问题**
+1. Module "file:///Users/liyu/Desktop/project/nodejs/global/http/xsanjin/user.json" needs an import attribute of type "json" 不能直接读取本地json文件
+解决方式：
+借助ajax()、fetch()、new XMLHttpRequest()获取json内容

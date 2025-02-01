@@ -1,8 +1,10 @@
 import http from 'node:http'
 import fs from 'node:fs'
 import path from 'node:path'
-import url from 'node:url'
+import url, { URL } from 'node:url'
 import mime from 'mime'
+// 以promise引入fs文件readfile
+import { readFile } from 'fs/promises'
 
 const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.resolve(__filename)
@@ -12,19 +14,15 @@ const serve = http.createServer((req, res) => {
   const { method, url } = req
   console.log(method, url, url.startsWith('static'))
   // 检测是否请求静态资源目录
-  if (url === '' || url === '/') {
-    
-    res.end(html)
-  }
-  if (method === 'GET' && url.startsWith('/static')) {
-    getStatic(req, res)
-    return
-  }
-  if (['POST, GET'].includes(method) && url.startsWith('/api')) {
+  if (url === '' || url === '/') return res.end(html)
+  if (method === 'GET' && url.startsWith('/static')) return getStatic(req, res)
+  console.log(url, ['POST', 'GET'].includes(method), url.startsWith('/api'))
+  if (['POST', 'GET'].includes(method) && url.startsWith('/api')) {
+    console.log('请求获取信息')
     switch (method) {
       case 'POST':
         console.log('post')
-        getPost()
+        getPost(req, res)
         break;
       case 'Get':
         console.log('get')
@@ -32,39 +30,51 @@ const serve = http.createServer((req, res) => {
         res.end(data)
     }
   } else {
-    res.writeHead(404, {
-      'content-type': 'text/plain'
-    })
-    res.end('404 notfund')
+    console.log('404 notfound')
+    // res.writeHead(404, {
+    //   'content-type': 'text/plain'
+    // })
+    res.statusCode = 200
+    // res.end(req)
   }
   
 })
 // 检测是否存在该用户
-function userCheck(data) {
-  const { userlist } = path.resolve(__dirname, './user.json')
-  console.log(data, userlist)
-  if (userlist.length === 0) return false
-  const user = userlist.find(item => {
+async function userCheck(data) {
+  console.log('url', await readFile(new URL('user.json', import.meta.url)))
+  const { userList }  = JSON.parse(
+    await readFile(new URL('./user.json', import.meta.url))
+  )
+  console.log('****', data,'%', userList)
+  if (!userList || userList.length === 0) return false
+  const user = userList.find(item => {
     return data.name === item.name && item.password == data.password
   })
   return user
 }
 // 检测到post请求执行
-function getPost() {
+function getPost(req, res) {
+  // console.log(req)
   let data = ''
   req.on('data', chunk => {
+    console.log(chunk)
     data +=chunk
   })
+  req.on('end', () => {
+    data = JSON.parse(data)
+  })
+  console.log('********', data)
   // 检测用户是否存在用户表
   if (userCheck(data)) {
     req.on('end', () => {
       res.statusCode = 200
-      res.end(data)
+      res.writeHead(200, {
+        'Content-Type': 'application/json'
+      })
+      res.end(JSON.stringify(data))
     })
   } else {
-    res.writeHead(200, {
-      'content-type': 'text/plain'
-    })
+    res.writeHead(200)
     res.end('不存在该用户')
   }
 }
