@@ -6,6 +6,19 @@
   <title>Document</title>
 </head>
 <body>
-  
+  <button id="userjoin" onclick="userjoin()">put</button>
+  <script>
+    function userjoin() {
+      fetch('api/login', {
+        method: 'POST',
+        body: JSON.stringify({
+          name: 'xsanjin',
+          passward: '123456'
+        })
+      }).then(res => {
+          console.log(res)
+      })
+    }
+  </script>
 </body>
 </html>
