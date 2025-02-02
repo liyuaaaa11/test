@@ -445,3 +445,6 @@ fetch('api/login', {
     console.log(err)
 })
 ```
+5. 邮件服务
+> 安装js-yaml、nodemailer
+实现任务分配与跟踪、错误报告和故障排除、自动化构建和持续集成

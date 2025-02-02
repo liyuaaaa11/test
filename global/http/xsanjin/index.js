@@ -5,6 +5,9 @@ import url, { URL } from 'node:url'
 import mime from 'mime'
 // 以promise引入fs文件readfile
 import { readFile } from 'fs/promises'
+// 邮件服务
+import yaml from 'js-yaml'
+import nodemailer from 'nodemailer'
 
 const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.resolve(__filename)
@@ -37,7 +40,6 @@ const serve = http.createServer((req, res) => {
     res.statusCode = 200
     // res.end(req)
   }
-  
 })
 // 检测是否存在该用户
 async function userCheck(data) {
@@ -64,6 +66,12 @@ function getPost(req, res) {
     data = JSON.parse(data)
   })
   console.log('********', data)
+  const { pathname } = url.parse(req.url)
+  if (!localStorage.token && pathname !== 'api/login') {
+    return
+  }
+  // 发送邮件
+  if (pathname === '/send/mail') {}
   // 检测用户是否存在用户表
   if (userCheck(data)) {
     req.on('end', () => {
