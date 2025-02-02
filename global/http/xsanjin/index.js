@@ -8,10 +8,24 @@ import { readFile } from 'fs/promises'
 // 邮件服务
 import yaml from 'js-yaml'
 import nodemailer from 'nodemailer'
+import { error } from 'node:console'
 
 const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.resolve(__filename)
 const html = fs.readFileSync(path.resolve(__dirname, './../static/index.html'))
+
+// 初始化邮件服务
+const mailInfo = yaml.load(fs.readFileSync(path.resolve(__dirname, './../mail.yaml'), 'utf8'))
+const transport = nodemailer.createTransport({
+  service: 'qq', // 服务商
+  host: 'smtp.qq.com', // 发送邮件服务器
+  prot: 456,// 发送邮件端口465或587
+  secure: true, // 是否使用https
+  auth: {
+    user: mailInfo.user, // 邮箱账号
+    pass: mailInfo.pass // 密码或者授权码
+  }
+})
 
 const serve = http.createServer((req, res) => {
   const { method, url } = req
@@ -64,30 +78,49 @@ function getPost(req, res) {
   })
   req.on('end', () => {
     data = JSON.parse(data)
+    console.log('********', data)
+    const { pathname } = url.parse(req.url)
+  // 未登录用户无法请求其他数据
+    if (typeof window !== 'undefined' && !localStorage.getItem('token') && pathname !== '/api/login') {
+      res.writeHead(500, {
+        'content-type': 'text/plain'
+      })
+      res.end('该用户未登录！')
+      return
+    }
+    // 发送邮件
+    console.log(pathname)
+    if (pathname === '/api/send/meil') {
+      console.log('send meil')
+      const { to, from, subject, text } = { ...data }
+      // 发送邮件
+      transport.sendMail({
+        to, // 收件者
+        from, // 发件者
+        subject, // 主题
+        text // 内容
+      }).catch(error =>  console.log(error) )
+      res.end('ok')
+      return
+    }
+    // 检测用户是否存在用户表
+    if (userCheck(data)) {
+      req.on('end', () => {
+        res.statusCode = 200
+        res.writeHead(200, {
+          'Content-Type': 'application/json'
+        })
+        const resData = Object.assign(data, {
+          token: '49ba59abbe56e057'
+        })
+        res.end(JSON.stringify(resData))
+      })
+    } else {
+      res.writeHead(200)
+      res.end('不存在该用户')
+    }
   })
-  console.log('********', data)
-  const { pathname } = url.parse(req.url)
-  if (!localStorage.token && pathname !== 'api/login') {
-    return
-  }
-  // 发送邮件
-  if (pathname === '/send/mail') {}
-  // 检测用户是否存在用户表
-  if (userCheck(data)) {
-    req.on('end', () => {
-      res.statusCode = 200
-      res.writeHead(200, {
-        'Content-Type': 'application/json'
-      })
-      const resData = Object.assign(data, {
-        token: '49ba59abbe56e057'
-      })
-      res.end(JSON.stringify(resData))
-    })
-  } else {
-    res.writeHead(200)
-    res.end('不存在该用户')
-  }
+  
 }
 
 function getStatic(req, res) {

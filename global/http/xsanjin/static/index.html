@@ -7,6 +7,7 @@
 </head>
 <body>
   <button id="userjoin" onclick="userjoin()">login</button>
+  <button id="sendmeil" onclick="sendmeil()">sendmeil</button>
   <script>
     function userjoin() {
       fetch('api/login', {
@@ -21,7 +22,26 @@
       }).then(res => {
           res.json().then(data => {
             console.log(data)
+            localStorage.setItem('token', data.token)
           })
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+    function sendmeil() {
+      fetch('api/send/meil', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({
+          to: 'al1474105320@163.com',
+          from: '3167764187@qq.com',
+          subject: '测试',
+          text: '这是一条测试邮件服务的信息！'
+        })
+      }).then(res => {
+        console.log(res)
       }).catch(err => {
         console.log(err)
       })
