@@ -71,7 +71,10 @@ function getPost(req, res) {
       res.writeHead(200, {
         'Content-Type': 'application/json'
       })
-      res.end(JSON.stringify(data))
+      const resData = Object.assign(data, {
+        token: '49ba59abbe56e057'
+      })
+      res.end(JSON.stringify(resData))
     })
   } else {
     res.writeHead(200)

@@ -265,3 +265,23 @@ const require = createRequire(import.meta.url)
 1. Module "file:///Users/liyu/Desktop/project/nodejs/global/http/xsanjin/user.json" needs an import attribute of type "json" 不能直接读取本地json文件
 解决方式：
 借助ajax()、fetch()、new XMLHttpRequest()获取json内容
+2. fetch()请求接口返回的json数据无法直接使用,需要将其转换
+```js
+fetch('api/login', {
+  method: 'post',
+  headers: {
+    'Content-Type': 'application/json;charset=utf-8'
+  },
+  body: JSON.stringify({
+    name: 'xsanjin',
+    passward: '123456'
+  })
+}).then(res => {
+  res.json().then(data => {
+    console.log(data)
+    local
+  })
+}).catch(err => {
+    console.log(err)
+})
+```
