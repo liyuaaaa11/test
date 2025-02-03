@@ -8,7 +8,6 @@ import { readFile } from 'fs/promises'
 // 邮件服务
 import yaml from 'js-yaml'
 import nodemailer from 'nodemailer'
-import { error } from 'node:console'
 
 const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.resolve(__filename)
@@ -80,7 +79,7 @@ function getPost(req, res) {
     data = JSON.parse(data)
     console.log('********', data)
     const { pathname } = url.parse(req.url)
-  // 未登录用户无法请求其他数据
+    // 未登录用户无法请求其他数据
     if (typeof window !== 'undefined' && !localStorage.getItem('token') && pathname !== '/api/login') {
       res.writeHead(500, {
         'content-type': 'text/plain'

@@ -447,4 +447,79 @@ fetch('api/login', {
 ```
 5. 邮件服务
 > 安装js-yaml、nodemailer
-实现任务分配与跟踪、错误报告和故障排除、自动化构建和持续集成
+实现任务分配与跟踪、错误报告和故障排除、自动化构建和持续集成<br>
+**配置yaml文件(以QQ邮箱为例)**
+* 进入QQ邮箱设置POP3/IMAP/SMTP/Exchange/CardDAV服务的授权码
+> https://wx.mail.qq.com/account/index?sid=zdtXdow_aUgu0GRVALxBMgAA#/?tab=safety&r=1738552476665
+```yaml
+{
+  user: '3167764187@qq.com',
+  pass: 'msozqpzsnuqidhac'
+}
+```
+**客户端发送邮件**
+```html
+<button id="sendmeil" onclick="sendmeil()">sendmeil</button>
+<script>
+  function sendmeil() {
+    fetch('api/send/meil', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify({
+        to: 'al1474105320@163.com',
+        from: '3167764187@qq.com',
+        subject: '测试',
+        text: '这是一条测试邮件服务的信息！'
+      })
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+</script>
+```
+**初始化邮件服务**
+```js
+import yaml from 'js-yaml'
+import nodemail from 'nodemail'
+
+const mailInfo = yaml.load(fs.readFileSync(path.resolve(__dirname, './..mail.yaml'), utf8))
+const transport = nodemail.createTransport({
+  service: 'qq',
+  host: 'smtp.qq.com',
+  port: 456,
+  service: true,
+  auth: {
+    user: mailInfo.user,
+    pass: mailInfo.pass
+  }
+})
+// 在post请求处理中执行邮件投递
+const { pathname } = url.parse(req.url)
+// 未登录用户无法请求其他数据
+if (typeof window !== 'undefined' && !localStorage.getItem('token') && pathname !== '/api/login') {
+  res.writeHead(500, {
+    'content-type': 'text/plain'
+  })
+  res.end('该用户未登录！')
+  return
+}
+if (pathnmae === '/api/send/meil') {
+  const { to, from, subject, text } = data
+  transport.sendmeil({
+    to,
+    from,
+    subject,
+    text
+  })
+  res.end('ok')
+  return
+}
+```
+**出现问题及解决方式**
+1. 当校验用户是否携带token邮寄时, 无法获取localstroge
+* 校验typeof window !== 'undefined'后获取loaclstroge
+
