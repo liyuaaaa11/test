@@ -6,6 +6,10 @@
 > 模块化路由；提高代码的组织性和维护性；<br>
 > 视图引擎支持：与各种模块引擎集成，如ejs、pug(jade)、handlebars等，方便动态生成html页面及动态渲染数据<br>
 > 中间件生态系统: 可以使用各种中间件扩展和增强应用程序的功能，如身份认证、会话管理、日志记录、静态文件服务等<br>
+* 安装nodemon
+> sudo npm i nodemon -g
+> 实时更新js文件,不用多次重启服务器
+> nodemon app.js启动服务器
 * 基础应用
 ```js
 import express from 'express'
@@ -189,3 +193,6 @@ const preventHotLingKing = (req, res, next) => {
 }
 app.use(preventHotLingKing)
 ```
+5. 响应头与跨域之间的关系
+* cors跨域资源共享
+ 
