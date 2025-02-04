@@ -14,8 +14,10 @@ log4js.configure({
     }
   },
   categories: { // 存放类别
-    appenders: ['out', 'file'],
-    level: 'debug'
+    default: {
+      appenders: ['out', 'file'],
+      level: 'debug'
+    }
   }
 })
 // 初始化logger

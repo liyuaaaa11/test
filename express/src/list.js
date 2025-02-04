@@ -1,7 +1,7 @@
 // 学校信息模块
 import express from 'express'
 const schoolRouter = express.Router()
-router.get('/list', (req, res) => {
+schoolRouter.get('/list', (req, res) => {
   res.json({
     code: 200,
     msg: '获取成功！',
@@ -18,7 +18,7 @@ router.get('/list', (req, res) => {
     ]
   })
 })
-router.get('/info', (req, res) => {
+schoolRouter.get('/info', (req, res) => {
   res.json({
     code: 200,
     msg: '获取成功！',

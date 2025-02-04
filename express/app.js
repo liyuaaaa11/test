@@ -1,7 +1,7 @@
 import express from 'express'
-import user from './src/user'
-import school from './src/list'
-import loggerMiddleware from './middleware/logger'
+import user from './src/user.js'
+import school from './src/list.js'
+import loggerMiddleware from './middleware/logger.js'
 // express是个函数
 const app = express()
 app.use(express.json()) // 支持post解析json数据
@@ -11,7 +11,8 @@ app.use(loggerMiddleware)
 // 第一个参数是接口前缀 防止重名
 app.use('/user', user)
 app.use('/school', school)
-
+// 初始化静态资源
+app.use(express.static('public'))
  
 /**
  * 
