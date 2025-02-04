@@ -1,9 +1,12 @@
 import express from 'express'
 import user from './src/user'
 import school from './src/list'
+import loggerMiddleware from './middleware/logger'
 // express是个函数
 const app = express()
 app.use(express.json()) // 支持post解析json数据
+// 请求拦截
+app.use(loggerMiddleware)
 // 模块化引入对应路由  然后通过中间件use()注册使用
 // 第一个参数是接口前缀 防止重名
 app.use('/user', user)
