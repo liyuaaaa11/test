@@ -3,7 +3,7 @@ import user from './src/user.js'
 import school from './src/list.js'
 import loggerMiddleware from './middleware/logger.js'
 // 网站白名单
-const whiteList = ['localhost'] // 可以配置网址或者ip
+const whiteList = ['localhost', '127.0.0.1'] // 可以配置网址或者ip
 // express是个函数
 const app = express()
 app.use(express.json()) // 支持post解析json数据
@@ -12,6 +12,7 @@ app.use(loggerMiddleware)
 // 编写防盗链
 const preventHotLingKing = (req, res, next) => {
   // 获取referer值 直接打开资源无法获取到referer值，需要发起请求
+  // referer值是可以被(后端)伪造的
   const referer = req.get('referer')
   console.log(referer)
   if (referer) {

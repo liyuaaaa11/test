@@ -28,3 +28,6 @@
 [2025-02-04T22:48:44.807] [DEBUG] default - [GET] /assets
 [2025-02-04T22:48:44.819] [DEBUG] default - [GET] /assets/
 [2025-02-04T22:48:44.838] [DEBUG] default - [GET] /assets/index.jpg
+[2025-02-04T22:50:23.593] [DEBUG] default - [GET] /assets/
+[2025-02-04T22:50:23.609] [DEBUG] default - [GET] /assets/index.jpg
+[2025-02-04T22:50:23.741] [DEBUG] default - [GET] /favicon.ico

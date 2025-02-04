@@ -163,4 +163,29 @@ app.use(loggerMiddleware)
 > 访问控制列表(acl), 网站管理员可以配置服务器的访问控制列表，只允许特定的域名或ip地址访问资源<br>
 > 使用防盗链插件或脚本；一些网站平台和内容管理系统提供专门的插件或脚本防止盗链如nginx<br>
 >水印技术: 在图片或视频上添加水印可以帮助识别盗链行为并提醒用户资源的来源(ffmpeg) 在global/process/child_process/ffmpeg文件夹<br>
-
+```js
+// app.js
+import express from 'express'
+// 网站白名单
+const whiteList = ['localhost', '127.0.0.1'] // 可以配置网址或者ip
+// express是个函数
+const app = express()
+// 编写防盗链 放在请求注册之前
+const preventHotLingKing = (req, res, next) => {
+  // 获取referer值 直接打开资源无法获取到referer值，需要发起请求
+  // referer值是可以被(后端)伪造的
+  const referer = req.get('referer')
+  console.log(referer)
+  if (referer) {
+    const { hostname } = new URL(referer)
+    if (!whiteList.includes(hostname)) {
+      console.log('当前页面不在白名单中')
+      res.status(403).send('您没有访问此页面的权限！')
+      return
+    }
+  }
+  console.log('访问成功～')
+  next()
+}
+app.use(preventHotLingKing)
+```
