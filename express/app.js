@@ -2,17 +2,39 @@ import express from 'express'
 import user from './src/user.js'
 import school from './src/list.js'
 import loggerMiddleware from './middleware/logger.js'
+// 网站白名单
+const whiteList = ['localhost'] // 可以配置网址或者ip
 // express是个函数
 const app = express()
 app.use(express.json()) // 支持post解析json数据
 // 请求拦截
 app.use(loggerMiddleware)
+// 编写防盗链
+const preventHotLingKing = (req, res, next) => {
+  // 获取referer值 直接打开资源无法获取到referer值，需要发起请求
+  const referer = req.get('referer')
+  console.log(referer)
+  if (referer) {
+    const { hostname } = new URL(referer)
+    if (!whiteList.includes(hostname)) {
+      console.log('当前页面不在白名单中')
+      res.status(403).send('您没有访问此页面的权限！')
+      return
+    }
+  }
+  console.log('访问成功～')
+  next()
+}
+app.use(preventHotLingKing)
 // 模块化引入对应路由  然后通过中间件use()注册使用
 // 第一个参数是接口前缀 防止重名
 app.use('/user', user)
 app.use('/school', school)
-// 初始化静态资源
-app.use(express.static('public'))
+// 初始化静态资源 自定义虚拟路由
+app.use('/assets', express.static('public'))
+app.listen(3000, () => {
+  console.log('http://localhost:3000')
+})
  
 /**
  * 
