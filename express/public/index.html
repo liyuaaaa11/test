@@ -8,5 +8,27 @@
 <body>
   <h1>express框架使用</h1>
   <img src="./index.jpg" alt="" srcset="">
+  <script>
+    // 同源策略 协议不同、域名不同、端口不同 任意不同浏览器会拒绝请求
+    // 默认是get请求
+    // content-type默认支持application/x-www-form-urlencode(name=xsanjin&name=10) | multipart/form-data(formdata) ｜text/plain(纯文本)
+    fetch('http://localhost:3000/info', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: 'xsanjin',
+        pass: '123456'
+      })
+    }).then(res =>{
+      const headers = res.headers
+      // 读取后端抛出自定义内容
+      console.log(headers.get(username))
+      res.json()
+    }).then(res => {
+      console.log(res)
+    })
+  </script>
 </body>
 </html>

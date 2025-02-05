@@ -8,7 +8,7 @@ const whiteList = ['localhost', '127.0.0.1'] // 可以配置网址或者ip
 const app = express()
 app.use(express.json()) // 支持post解析json数据
 // 请求拦截
-app.use(loggerMiddleware)
+app.use('*', loggerMiddleware)
 // 编写防盗链
 const preventHotLingKing = (req, res, next) => {
   // 获取referer值 直接打开资源无法获取到referer值，需要发起请求
@@ -27,6 +27,11 @@ const preventHotLingKing = (req, res, next) => {
   next()
 }
 app.use(preventHotLingKing)
+// 满足以下条件会触发预检请求，options请求由浏览器发起
+// 1. content-type设置为application/json
+// 2. 自定义请求头
+// 3. 非普通请求 patch put delete
+
 // 模块化引入对应路由  然后通过中间件use()注册使用
 // 第一个参数是接口前缀 防止重名
 app.use('/user', user)
