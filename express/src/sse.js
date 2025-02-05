@@ -1,4 +1,4 @@
-// 学校信息模块
+// sse单工通讯模块
 import express from 'express'
 const sseRouter = express.Router()
 // 全双工通讯 websocket-实时通讯 前后端可以实时发送信息
