@@ -195,6 +195,54 @@ app.use(preventHotLingKing)
 ```
 5. 响应头与跨域之间的关系
 * cors跨域资源共享
-> 当协议不同、域名不同、端口不同符合任意一项，浏览器会拒绝该请求
-> 前后端分离时，需要后端在服务器设置响应头允许前端访问
- 
+> 当协议不同、域名不同、端口不同符合任意一项，浏览器会拒绝该请求<br>
+> 前后端分离时，需要后端在服务器设置响应头允许前端访问<br>
+
+* 满足以下条件会触发预检请求，options请求由浏览器发起
+> content-type设置为application/json<br>
+> 自定义请求头<br>
+> 非普通请求 patch put delete<br>
+**设置服务器响应头**
+ ```js
+ // middlewar/logger.js文件 设置响应头
+const loggerMiddleware = (req, res, next) => {
+  logger.debug(`[${req.method}] ${req.url}`)
+  // * 允许所有资源访问 获取不到session值
+  // res.setHeader('Access-Control-Allow-Origin', '*')
+  // 指定ip或者网址
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5000')
+  // 默认只支持get post head三种方式
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH')
+  // 支持application/json请求头
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+  // 后端自创响应头并抛出 返回给前端读取
+  res.set('username', 123456)
+  res.setHeader('Access-Control-Expose-Headers', 'username')
+  next()
+}
+ ```
+ **静态页面**
+ ```html
+ <script>
+  // 同源策略 协议不同、域名不同、端口不同 任意不同浏览器会拒绝请求
+  // 默认是get请求
+  // content-type默认支持application/x-www-form-urlencode(name=xsanjin&name=10) | multipart/form-data(formdata) ｜text/plain(纯文本)
+  fetch('http://localhost:3000/user/info', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: 'xsanjin',
+      pass: '123456'
+    })
+  }).then(res =>{
+    const headers = res.headers
+    // 读取后端抛出自定义内容
+    console.log(headers.get(username))
+    res.json()
+  }).then(res => {
+    console.log(res)
+  })
+</script>
+ ```
