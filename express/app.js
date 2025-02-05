@@ -1,4 +1,5 @@
 import express from 'express'
+import sseRouter from './src/sse.js'
 import user from './src/user.js'
 import school from './src/list.js'
 import loggerMiddleware from './middleware/logger.js'
@@ -34,6 +35,7 @@ app.use(preventHotLingKing)
 
 // 模块化引入对应路由  然后通过中间件use()注册使用
 // 第一个参数是接口前缀 防止重名
+app.use('/sse', sseRouter)
 app.use('/user', user)
 app.use('/school', school)
 // 初始化静态资源 自定义虚拟路由
