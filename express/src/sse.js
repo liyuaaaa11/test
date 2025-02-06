@@ -10,7 +10,7 @@ sseRouter.get('/data', (req, res) => {
   // 计时器每隔一秒给前端发送一次数据流
   setInterval(() => {
     res.write('event: test\n') // 默认message 可以自定义监听事件名称
-    res.write('data:'+DataTransfer.now()+'\n\n') // 返回数据
+    res.write('data:'+ DataTransfer.now()+'\n\n') // 返回数据
   }, 1000)
 })
 // 导出sseRouter模块

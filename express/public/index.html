@@ -12,14 +12,14 @@
     // 同源策略 协议不同、域名不同、端口不同 任意不同浏览器会拒绝请求
     // 默认是get请求
     // content-type默认支持application/x-www-form-urlencode(name=xsanjin&name=10) | multipart/form-data(formdata) ｜text/plain(纯文本)
-    fetch('http://localhost:3000/user/info', {
+    fetch('http://localhost:3000/user/login', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         name: 'xsanjin',
-        pass: '123456'
+        password: '123456'
       })
     }).then(res =>{
       const headers = res.headers
@@ -29,15 +29,31 @@
     }).then(res => {
       console.log(res)
     })
-    // 单工通讯接收后端传过来的实时数据
-    const sse = new EventSource('http://localhost:3000/sse/data')
-    // 默认message
-    sse.addEventListener('message', (e) => {
-      console.log(e.data)
-    })
-    // 监听自定义方法
-    sse.addEventListener('test', (e) => {
-      console.log(e.data)
+    // // 单工通讯接收后端传过来的实时数据
+    // const sse = new EventSource('http://localhost:3000/sse/data')
+    // // 默认message
+    // sse.addEventListener('message', (e) => {
+    //   console.log(e.data)
+    // })
+    // // 监听自定义方法
+    // sse.addEventListener('test', (e) => {
+    //   console.log(e.data)
+    // })
+    fetch('http://localhost:3000/user/register', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        age: 18,
+        address: '北京',
+        name: 'xsanjin',
+        password: '123456',
+      })
+    }).then(res =>{
+      res.json()
+    }).then(res => {
+      console.log(res)
     })
   </script>
 </body>

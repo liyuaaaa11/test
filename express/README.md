@@ -10,8 +10,16 @@
 > sudo npm i nodemon -g
 > 实时更新js文件,不用多次重启服务器
 > nodemon app.js启动服务器
-* 安装mysql2
+* 安装mysql2(废弃)
 > 连接mysql并编写sql语句
+```yaml
+db:
+  user: root
+  password: '数据库密码'
+  host: localhost
+  port: 3306
+  database: 数据库名称
+```
 ```js
 import fs from 'fs'
 import mysql2 from 'mysql2'
@@ -23,6 +31,8 @@ mysql2.createConnection({
   ...config.db
 })
 ```
+* knex生成并执行sql语句
+> 支持pg、sqlite3 mysql2 oracledb tedious多种数据库
 * 基础应用
 ```js
 import express from 'express'

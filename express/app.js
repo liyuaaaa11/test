@@ -4,15 +4,6 @@ import user from './src/user.js'
 import school from './src/list.js'
 import loggerMiddleware from './middleware/logger.js'
 
-import fs from 'fs'
-import mysql2 from 'mysql2'
-import jsyaml from 'js-yaml'
-const config = jsyaml.load(fs.readFileSync('./db.config.yaml', 'utf-8'))
-console.log(config.db)
-// 创建连接池
-mysql2.createConnection({
-  ...config.db
-})
 // 网站白名单
 const whiteList = ['localhost', '127.0.0.1'] // 可以配置网址或者ip
 // express是个函数
@@ -50,6 +41,7 @@ app.use('/user', user)
 app.use('/school', school)
 // 初始化静态资源 自定义虚拟路由
 app.use('/assets', express.static('public'))
+
 app.listen(3000, () => {
   console.log('http://localhost:3000')
 })
@@ -84,4 +76,14 @@ app.listen(3000, () => {
 // })
 // app.listen(3000, () => {
 //   console.log('http://localhost:3000')
+// })
+
+// import fs from 'fs'
+// import mysql2 from 'mysql2'
+// import jsyaml from 'js-yaml'
+// const config = jsyaml.load(fs.readFileSync('./db.config.yaml', 'utf-8'))
+// console.log(config.db)
+// // 创建连接池
+// const sql = await mysql2.createConnection({
+//   ...config.db
 // })
