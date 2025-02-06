@@ -16,6 +16,18 @@ CREATE TABLE `user` (
   address VARCHAR(200) COMMENT '地址',
   create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
  ) COMMENT '用户表'
+
+
+ ####### 创建project表 且外键user表id
+CREATE TABLE `project`(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '项目id',
+  name VARCHAR(100) COMMENT '项目名称',
+  create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  user_id INT NOT NULL COMMENT '用户id',
+  FOREIGN KEY (user_id) REFERENCES user(id)
+) COMMENT '项目表'
+
+
  # 已创建表增加字段
  ALTER TABLE `user` ADD COLUMN `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间';
  # 删除表中某个字段

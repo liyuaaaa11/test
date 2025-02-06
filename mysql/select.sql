@@ -23,3 +23,14 @@ SELECT * FROM `user` WHERE name LIKE '%sanjin';
 SELECT * FROM `user` WHERE name LIKE '%sanjin%';
 # _固定字符查询的数量(1个或多个字符)
 SELECT * FROM `user` WHERE name LIKE '_sanjin%';
+
+####### 子查询+连表
+# 子查询必须要用小括号包裹起来
+SELECT * FROM `project` WHERE user_id = (SELECT id FROM `user` WHERE name = 'test');
+# 连表查询 把user表和project表内容组合成一个表
+# 内连接
+SELECT * FROM `user`, `project` WHERE `user`.id = `project`.user_id;
+# 外连接 左连接 右连接
+# 左连接 LEFT JOIN(表名) ON (连接的条件)
+# 左连接以驱动表(user)为主，如果没有关联数据则全部填充null
+SELECT * FROM `user` LEFT JOIN `project` ON  `user`.id = `project`.user_id;

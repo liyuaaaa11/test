@@ -29,6 +29,9 @@ DEFAULT CHARACTER SET = 'utf8'
 # 每个字段包含: 名称,类型,属性
 # NOT NULL 字段不能为空; AUTO_INCREMENT 字段自增; PRIMARY KEY当前字段设置为主键; TIMESTAMP 代表当前字段是时间戳;
 # 修改表名 ALTER TABLE `user` RENAME `userRename`;
+
+
+####### 创建user表
 CREATE TABLE `user` {
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) COMMENT '名字',
@@ -36,6 +39,16 @@ CREATE TABLE `user` {
   address VARCHAR(200) COMMENT '地址',
   create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
 } COMMENT '用户表'
+
+####### 创建project表 且外键user表id
+CREATE TABLE `project`(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '项目id',
+  name VARCHAR(100) COMMENT '项目名称',
+  create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  user_id INT NOT NULL COMMENT '用户id',
+  FOREIGN KEY (user_id) REFERENCES user(id)
+) COMMENT '项目表'
+
  # 已创建表增加字段
  ALTER TABLE `user` ADD COLUMN `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间';
  # 删除表中某个字段
@@ -71,6 +84,18 @@ SELECT * FROM `user` WHERE name LIKE '%sanjin';
 SELECT * FROM `user` WHERE name LIKE '%sanjin%';
 # _固定字符查询的数量(1个或多个字符)
 SELECT * FROM `user` WHERE name LIKE '_sanjin%';
+
+
+####### 子查询+连表
+# 子查询必须要用小括号包裹起来
+SELECT * FROM `project` WHERE user_id = (SELECT id FROM `user` WHERE name = 'test');
+# 连表查询 把user表和project表内容组合成一个表
+# 内连接
+SELECT * FROM `user`, `project` WHERE `user`.id = `project`.user_id;
+# 外连接 左连接 右连接
+# 左连接 LEFT JOIN(表名) ON (连接的条件)
+# 左连接以驱动表(user)为主，如果没有关联数据则全部填充null
+SELECT * FROM `user` LEFT JOIN `project` ON  `user`.id = `project`.user_id;
 ```
 ### 数据表增删改
 ```sql
