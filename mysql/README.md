@@ -45,3 +45,30 @@ CREATE TABLE `user` {
  # 编辑表中某个字段
  ALTER TABLE `user` MODIFY `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间';
 ```
+### 数据查询
+```sql
+# 单个数据表内容查询
+# 单个列数据查询
+SELECT id FROM `user`;
+# 多个列数据查询
+SELECT id, name FROM `user`;
+# 查询所有列
+SELECT * FROM `user`;
+# 查询列并修改查询结果后的列名
+SELECT id as user_id, name as user_name FROM `user`;
+# 依据id降序排列 desc降序排列  asc升序排列
+SELECT * FROM `user` ORDER BY id DESC;
+# 限制查询结果 第一个参数开始行，第二个参数数量
+SELECT * FROM `user` LIMIT 0, 3;
+# 条件查询  SELECT * FROM `user` WHERE [列名] = [值]
+SELECT * FROM `user` WHERE name = 'xsanjin'
+# 多个条件查询 AND(并且)  OR(或者)
+SELECT * FROM `user` WHERE name = 'xsanjin' AND age <= 18;
+# 模糊查询 即数据表只要含有某部分就全部列出
+# LIKE '%值'(模糊匹配)  指以某个值结尾返回
+SELECT * FROM `user` WHERE name LIKE '%sanjin';
+# LIKE '%值%'(模糊匹配) 只要携带某个值就全部返回
+SELECT * FROM `user` WHERE name LIKE '%sanjin%';
+# _固定字符查询的数量(1个或多个字符)
+SELECT * FROM `user` WHERE name LIKE '_sanjin%';
+```
