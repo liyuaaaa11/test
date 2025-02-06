@@ -1,22 +1,3 @@
-### mac系统安装mysql安装
-* sql是用于管理关系型数据库的语言。是一种标准化语言，用于执行各种数据库操作，包括数据查询、插入、更新和删除等。
-网址：https://dev.mysql.com/downloads/mysql/
-![alt text](mysql-install.png)
-**配置mysql命令**
-1. 编辑.zshrc文件
-sudo vim ~/.zshrc<br>
-i键进入编辑模式，输入export PATH=$PATH:/usr/local/mysql/bin<br>
-esc键退出编辑模式，输入:wq保存退出
-![alt text](mysql-setting.png)
-2. source ~/.zshrc执行配置文件
-输入mysql -version 查看当前mysql版本
-4. 安装可视化插件
-* vscode中Database Client
-![alt text](mysql-client.png)
-### mysql基本使用
-* 连接数据库
-> mysql -uroot -p 输入密码即可连接成功
-```sql
 # 查看当前数据库
 show database; 
 # 创建数据库 大小写无限制
@@ -25,23 +6,22 @@ CREATE DATABASE IF NOT EXISTS `xsanjin`
 # 数据库设置为字符集
 DEFAULT CHARACTER SET = 'utf8'
 ###########
-# 创建包含字段id,name,age,address,create_time的user表
+# 创建user表包含字段 id,name,age,address,create_time
 # 每个字段包含: 名称,类型,属性
 # NOT NULL 字段不能为空; AUTO_INCREMENT 字段自增; PRIMARY KEY当前字段设置为主键; TIMESTAMP 代表当前字段是时间戳;
-# 修改表名 ALTER TABLE `user` RENAME `userRename`;
-CREATE TABLE `user` {
+CREATE TABLE `user` (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) COMMENT '名字',
   age INT COMMENT '年龄',
   address VARCHAR(200) COMMENT '地址',
   create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
-} COMMENT '用户表'
+ ) COMMENT '用户表'
  # 已创建表增加字段
  ALTER TABLE `user` ADD COLUMN `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间';
  # 删除表中某个字段
  ALTER TABLE `user` DROP `update_time`;
  # 删除多个字段/执行多类型操作使用逗号分隔
  ALTER TABLE `user` DROP `update_time`, DROP `age`;
+
  # 编辑表中某个字段
  ALTER TABLE `user` MODIFY `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间';
-```
