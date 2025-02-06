@@ -10,6 +10,19 @@
 > sudo npm i nodemon -g
 > 实时更新js文件,不用多次重启服务器
 > nodemon app.js启动服务器
+* 安装mysql2
+> 连接mysql并编写sql语句
+```js
+import fs from 'fs'
+import mysql2 from 'mysql2'
+import jsyaml from 'js-yaml'
+const config = jsyaml.load(fs.readFileSync('./db.config.yaml', 'utf-8'))
+console.log(config.db)
+// 创建连接池
+mysql2.createConnection({
+  ...config.db
+})
+```
 * 基础应用
 ```js
 import express from 'express'

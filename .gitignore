@@ -3,4 +3,5 @@ node_modules/
 dist/
 npm-debug.log
 mail.yaml
+db.config.yaml
 logs
