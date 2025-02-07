@@ -11,7 +11,7 @@ const db = knex({
   connection: config.db
 })
 // 动态创建表
-db.schema.createTableIfNotExists('list', table => {
+db.schema.createTableIfNotExists('school_list', table => {
   table.increments('id') // id 主键自增
   table.string('name') // name 字符串
   table.integer('num')

@@ -55,6 +55,20 @@
     }).then(res => {
       console.log(res)
     })
+    fetch('http://localhost:3000/school/list', {
+      method: 'get'
+    }).then(res =>{
+      res.json()
+    }).then(res => {
+      console.log(res)
+    })
+    fetch('http://localhost:3000/school/info?id=1', {
+      method: 'get'
+    }).then(res =>{
+      res.json()
+    }).then(res => {
+      console.log(res)
+    })
   </script>
 </body>
 </html>

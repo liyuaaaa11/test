@@ -6,6 +6,7 @@ userRouter.post('/login', async (req, res) => {
   const { name, password } = req.body
   // 查询数据库
   const user = await db('user').where({ name, password }).select()
+  const data = await db('project').select().leftJoin('user', 'user.id', 'project.user_id')
   console.log('user', req.body, user)
   if (!user.length) {
     res.json({
@@ -16,7 +17,8 @@ userRouter.post('/login', async (req, res) => {
   }
   res.json({
     code: 200,
-    msg: '登录成功！'
+    msg: '登录成功！',
+    data: data
   })
 })
 
