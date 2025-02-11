@@ -1,1 +1,0 @@
-console.log('#### 当前 post.js ####')
