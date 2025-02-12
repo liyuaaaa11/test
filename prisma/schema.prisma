@@ -15,7 +15,7 @@ datasource db {
 // 编写表结构
 // 创建模型表
 model Model {
-  id Int @id @default(autoincrement) // 自增id
+  id Int @id @default(autoincrement()) // 自增id
   name String
   description String
   url String
@@ -27,6 +27,6 @@ model Model {
 model User {
   id Int @id @default(autoincrement()) // 自增id
   name String
-  modelList Model() // 一对多的关系
+  models Model[] // 一对多的关系
 
 }
