@@ -13,3 +13,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 // 编写表结构
+// 创建模型表
+model Model {
+  id Int @id @default(autoincrement) // 自增id
+  name String
+  description String
+  url String
+  md5 String @unique // 唯一不可重复
+  user User @relation(fields: [userId], references: [id]) // 外键
+  userId Int // 关联id 将userId关联到user表的id
+}
+// 创建user表 一个用户可以上传多个模型
+model User {
+  id Int @id @default(autoincrement()) // 自增id
+  name String
+  modelList Model() // 一对多的关系
+
+}
