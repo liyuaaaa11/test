@@ -18,7 +18,7 @@
 > prisma/schema.prisma中编写数据库表结构
 * npm install typescript -g
 > tsc --init生成ts配置文件<br>
-> npm install ts-node -g 启动ts文件使用
+> npm install ts-node -g 启动ts文件使用<br>
 > npm install --save-dev @types/express
 ## 技术栈
 
