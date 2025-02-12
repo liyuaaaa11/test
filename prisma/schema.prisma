@@ -7,7 +7,6 @@
 generator client {
   provider = "prisma-client-js"
 }
-
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -27,6 +26,6 @@ model Model {
 model User {
   id Int @id @default(autoincrement()) // 自增id
   name String
+  password String
   models Model[] // 一对多的关系
-
 }

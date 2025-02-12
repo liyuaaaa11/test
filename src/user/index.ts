@@ -15,7 +15,9 @@ export default class User {
           name: 'Alice',
           password: '123456',
         },
-      })
+      }).catch((e) => {
+        console.log(e);
+      });
       res.send('User created');
     });
   }
