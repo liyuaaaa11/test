@@ -2,12 +2,12 @@
 
 项目名称：test项目
 <br>
-项目描述：主要描述作者基于现有的知识，设计前后端分离的基础项目
+项目描述：主要基于作者现有的知识，研发一款前后端分离的基础项目
 
 ## 项目目录
 --flowchart 主要业务流程图<br>
 --prisma  编写数据库内容<br/>
-----schema.prisma 创建数据库表
+----schema.prisma 创建数据库表<br>
 --src<br>
 ----app.ts 主文件入口<br>
 --tsconfig.json<br>
@@ -19,6 +19,7 @@
 * npm install typescript -g
 > tsc --init生成ts配置文件<br>
 > npm install ts-node -g 启动ts文件使用
+> npm install --save-dev @types/express
 ## 技术栈
 
 
