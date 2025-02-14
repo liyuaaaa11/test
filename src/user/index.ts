@@ -1,14 +1,14 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
-const UserRouter = express.Router();
+const UserRouter:any  = express.Router();
 class User {
   constructor() {
     console.log('User class created');
   }
   async create() {
     console.log('User created');
-    UserRouter.post('/create', async (req, res) => {
+    UserRouter.post('/create', async (req: express.Request, res: express.Response) => {
       console.log('User created', req.body);
       const {name, password} = req.body;
       const data = await prisma.user.create({
@@ -24,7 +24,7 @@ class User {
   }
   async get() {
     console.log('User get');
-    UserRouter.get('/info:id', async (req, res) => {
+    UserRouter.get('/info:id', async (req: express.Request, res: express.Response) => {
       console.log('User get');
       const data = await prisma.user.findMany({
         where: {
@@ -36,7 +36,7 @@ class User {
   }
   async update() {
     console.log('User update');
-    UserRouter.put('/user/edit', async (req, res) => {
+    UserRouter.put('/user/edit', async (req: express.Request, res: express.Response) => {
       console.log('User update');
       const data = await prisma.user.update({
         where: {
@@ -52,7 +52,7 @@ class User {
   }
   async delete() {
     console.log('User delete');
-    UserRouter.delete('/del', async (req, res) => {
+    UserRouter.delete('/del', async (req: express.Request, res: express.Response) => {
       console.log('User delete');
       await prisma.model.deleteMany({
         where: {
@@ -74,7 +74,7 @@ class User {
   }
 }
 const user = new User();
-console.log(UserRouter)
+console.log(UserRouter.post)
 user.create();
 user.get();
 user.update();

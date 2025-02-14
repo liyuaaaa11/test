@@ -9,9 +9,15 @@
 --prisma  编写数据库内容<br/>
 ----schema.prisma 创建数据库表<br>
 --src<br>
+----db 数据库<br>
+----user user模块<br>
+------controller.ts <br>
+------service.ts <br>
+------user.dto.ts <br>
 ----app.ts 主文件入口<br>
 --tsconfig.json<br>
 ## 前期准备
+* npm i @types/node -D
 * prisma init --datasource-provider mysql
 > npm i prisma -g 安装prisma <br>
 > .env配置mysql路径<br>
@@ -24,7 +30,6 @@
 > 实现IoC控制反转和DI依赖注入
 > npm i inversify-express-utils
 ## 技术栈
-
 
 
 ## 项目注意事项
