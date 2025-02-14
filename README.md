@@ -20,6 +20,9 @@
 > tsc --init生成ts配置文件<br>
 > npm install ts-node -g 启动ts文件使用<br>
 > npm install --save-dev @types/express
+* npm i inversify reflect-metadata
+> 实现IoC控制反转和DI依赖注入
+> npm i inversify-express-utils
 ## 技术栈
 
 

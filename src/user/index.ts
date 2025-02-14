@@ -1,45 +1,82 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
-export default class User {
-  UserRouter = express.Router();
+const UserRouter = express.Router();
+class User {
   constructor() {
     console.log('User class created');
   }
   async create() {
     console.log('User created');
-    this.UserRouter.post('/user', async (req, res) => {
-      console.log('User created');
-      await prisma.user.create({
+    UserRouter.post('/create', async (req, res) => {
+      console.log('User created', req.body);
+      const {name, password} = req.body;
+      const data = await prisma.user.create({
         data: {
-          name: 'Alice',
-          password: '123456',
-        },
+          name,
+          password
+        }
       }).catch((e) => {
         console.log(e);
       });
-      res.send('User created');
+      res.send(data);
     });
   }
   async get() {
     console.log('User get');
-    this.UserRouter.get('/user', async (req, res) => {
+    UserRouter.get('/info:id', async (req, res) => {
       console.log('User get');
-      res.send('User get');
+      const data = await prisma.user.findMany({
+        where: {
+          id: Number(req.params.id)
+        }
+      });
+      res.send(data);
     });
   }
   async update() {
     console.log('User update');
-    this.UserRouter.put('/user', async (req, res) => {
+    UserRouter.put('/user/edit', async (req, res) => {
       console.log('User update');
-      res.send('User update');
+      const data = await prisma.user.update({
+        where: {
+          id: Number(req.body.id)
+        },
+        data: {
+          name: req.body.name,
+          password: req.body.password
+        }
+      });
+      res.send(data);
     });
   }
   async delete() {
     console.log('User delete');
-    this.UserRouter.delete('/user', async (req, res) => {
+    UserRouter.delete('/del', async (req, res) => {
       console.log('User delete');
-      res.send('User delete');
+      await prisma.model.deleteMany({
+        where: {
+          userId: Number(req.body.id)
+        }
+      })
+
+      await prisma.user.delete({
+        where: {
+          id: Number(req.body.id)
+        }
+      }).then(() => {
+        res.send('User delete');
+        console.log('User delete');
+      }).catch((e) => {
+        console.log(e);
+      });
     });
   }
 }
+const user = new User();
+console.log(UserRouter)
+user.create();
+user.get();
+user.update();
+user.delete();
+export default UserRouter;
