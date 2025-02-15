@@ -4,7 +4,14 @@ import 'reflect-metadata';
 import { InversifyExpressServer } from 'inversify-express-utils';
 // 
 import { Container } from 'inversify';
+// 引入express
+import express from 'express';
+// 引入prisma/client  封装数据操作
+import { PrismaClient } from '@prisma/client';
+// 引入封装好的数据库模块
+import { prismaDB } from './db';
 
+// 引入user模块
 import { UserController } from './user/controller';
 import { UserService } from './user/service';
 
@@ -12,8 +19,23 @@ const container = new Container();
 // 注入user模块
 container.bind(UserController).to(UserController);
 container.bind(UserService).to(UserService);
+/*
+* 注入自定义工厂
+* 封装数据库模块并注入
+*/
+container.bind('PrismaClient').toFactory(() => {
+  return () => {
+    new PrismaClient();
+  }
+});
+container.bind(prismaDB).to(prismaDB);
 
 const server = new InversifyExpressServer(container);
+// 编写中间键
+server.setConfig((app) => {
+  // 支持接收json数据格式
+  app.use(express.json());
+});
 const app = server.build();
 
 

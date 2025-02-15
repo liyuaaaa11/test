@@ -1,8 +1,8 @@
 // 控制层只处理路由 通过service层调用实现具体的业务逻辑
 // 注入器  injectable封装到里面
-// nextjs
+// 类似nextjs
 import { controller, httpGet as Get, httpPost as Post } from 'inversify-express-utils';
-// springboot
+// 类似springboot
 // import { controller, httpGet as GetMapping, httpPost as PostMapping } from 'express';
 import { UserService } from './service';
 import { inject } from 'inversify';

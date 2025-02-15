@@ -1,0 +1,10 @@
+import { injectable, inject } from 'inversify';
+import { PrismaClient } from '@prisma/client';
+@injectable()
+export class prismaDB {
+  prisma: PrismaClient;
+  constructor(@inject('PrismaClient') PrismaClient: () => PrismaClient) {
+    this.prisma = PrismaClient();
+    console.log('PrismaDB class created');
+  }
+ }

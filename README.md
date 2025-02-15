@@ -11,8 +11,8 @@
 --src<br>
 ----db 数据库<br>
 ----user user模块<br>
-------controller.ts <br>
-------service.ts <br>
+------controller.ts user路由控制器处理<br>
+------service.ts user业务层编写<br>
 ------user.dto.ts <br>
 ----app.ts 主文件入口<br>
 --tsconfig.json<br>
@@ -29,6 +29,7 @@
 * npm i inversify reflect-metadata
 > 实现IoC控制反转和DI依赖注入
 > npm i inversify-express-utils
+* 连接数据库 引入prisma/client 
 ## 技术栈
 
 
