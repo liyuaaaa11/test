@@ -29,7 +29,9 @@
 * npm i inversify reflect-metadata
 > 实现IoC控制反转和DI依赖注入
 > npm i inversify-express-utils
-* 连接数据库 引入prisma/client 
+* 封装数据库操作 引入prisma/client
+> src/db文件中编码
+* class-validator、class-transformer 校验接口字段格式
 ## 技术栈
 
 
