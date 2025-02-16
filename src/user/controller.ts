@@ -17,13 +17,14 @@ export class UserController {
     console.log('User Controller Created');
   }
   @Get('/')
-  public getIndex(req: Request, res: Response) {
-    let result = this.userService.getList();
+  public async getIndex(req: Request, res: Response) {
+    let result = await this.userService.getList();
     res.send(result);
   }
   @Post('/create')
-  public create(req: Request, res: Response) {
-    let result = this.userService.create();
+  public async create(req: Request, res: Response) {
+    console.log('User created', req.body);
+    let result = await this.userService.create(req.body);
     res.send(result);
   }
 }

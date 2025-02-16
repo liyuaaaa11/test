@@ -9,7 +9,7 @@ import express from 'express';
 // 引入prisma/client  封装数据操作
 import { PrismaClient } from '@prisma/client';
 // 引入封装好的数据库模块
-import { prismaDB } from './db';
+import { PrismaDB } from './db';
 
 // 引入user模块
 import { UserController } from './user/controller';
@@ -23,12 +23,12 @@ container.bind(UserService).to(UserService);
 * 注入自定义工厂
 * 封装数据库模块并注入
 */
-container.bind('PrismaClient').toFactory(() => {
+container.bind<PrismaClient>('PrismaClient').toFactory(() => {
   return () => {
-    new PrismaClient();
+    return new PrismaClient();
   }
 });
-container.bind(prismaDB).to(prismaDB);
+container.bind(PrismaDB).to(PrismaDB);
 
 const server = new InversifyExpressServer(container);
 // 编写中间键
