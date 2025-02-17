@@ -10,9 +10,9 @@
 ----schema.prisma 创建数据库表<br>
 --src<br>
 ----db 数据库<br>
-------index.ts 自定义数据库工厂
-----jwt 身份校验并生成token
-------index.ts 
+------index.ts 自定义数据库工厂<br>
+----jwt 身份校验并生成token<br>
+------index.ts <br>
 ----user user模块<br>
 ------controller.ts 路由控制器处理<br>
 ------service.ts 业务层编写<br>
