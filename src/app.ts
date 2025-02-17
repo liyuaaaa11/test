@@ -10,6 +10,7 @@ import express from 'express';
 import { PrismaClient } from '@prisma/client';
 // 引入封装好的数据库模块
 import { PrismaDB } from './db';
+import { JWT } from './jwt';
 
 // 引入user模块
 import { UserController } from './user/controller';
@@ -29,12 +30,15 @@ container.bind<PrismaClient>('PrismaClient').toFactory(() => {
   }
 });
 container.bind(PrismaDB).to(PrismaDB);
+container.bind(JWT).to(JWT)
 
 const server = new InversifyExpressServer(container);
 // 编写中间键
 server.setConfig((app) => {
   // 支持接收json数据格式
   app.use(express.json());
+  // 读取jwt内部init方法并与express关联
+  app.use(container.get(JWT).init())
 });
 const app = server.build();
 

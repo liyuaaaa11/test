@@ -5,11 +5,14 @@ import { PrismaDB } from '../db';
 import { UserDto } from './user.dto';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
-
+import { JWT } from '../jwt';
 // 通过装饰器注入
 @injectable()
 export class UserService {
-  constructor(@inject(PrismaDB) private readonly PrismaDB: PrismaDB) {
+  constructor(
+    @inject(PrismaDB) private readonly PrismaDB: PrismaDB,
+    @inject(JWT) private readonly JWT: JWT
+  ) {
 
   }
   public async getList() {
@@ -24,9 +27,14 @@ export class UserService {
     if (errors.length > 0) {
       return errors
     } else {
-      return await this.PrismaDB.prisma.user.create({
+      let result = await this.PrismaDB.prisma.user.create({
         data: user
       })
+      console.log(this.JWT.creatToken(result))
+      return {
+        ...result,
+        token: this.JWT.creatToken(result)
+      }
     }
   }
 }

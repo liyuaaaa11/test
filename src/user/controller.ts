@@ -8,6 +8,7 @@ import { UserService } from './service';
 import { inject } from 'inversify';
 
 import type { Request, Response } from 'express';
+import { JWT } from '../jwt';
 
 // 装饰器 类似路由可以接入路由地址
 @controller('/user')
@@ -16,7 +17,7 @@ export class UserController {
   constructor(@inject(UserService) private readonly userService: UserService) {
     console.log('User Controller Created');
   }
-  @Get('/')
+  @Get('/', JWT.middleware())
   public async getIndex(req: Request, res: Response) {
     let result = await this.userService.getList();
     res.send(result);

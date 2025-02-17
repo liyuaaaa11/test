@@ -1,13 +1,15 @@
 
-POST http://localhost:3000/user/create HTTP/1.1
-Content-Type: application/json
+# POST http://localhost:3000/user/create HTTP/1.1
+# Content-Type: application/json
 
-{
-    "name": "test",
-    "password": "123456"
-}
+# {
+#     "name": "test",
+#     "password": "123456"
+# }
 
-# GET http://localhost:3000/user/ HTTP/1.1
+GET http://localhost:3000/user/ HTTP/1.1
+// 携带token请求
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsIm5hbWUiOiJ0ZXN0IiwicGFzc3dvcmQiOiIxMjM0NTYiLCJpYXQiOjE3Mzk3Nzg2NDIsImV4cCI6MTczOTg2NTA0Mn0.SrHL5N2Kq0GxpUKO-7p9T5S10FKtYiETcq6r-tZ--Yk
 
 # POST http://localhost:3000/user/update HTTP/1.1
 # Content-Type: application/json
