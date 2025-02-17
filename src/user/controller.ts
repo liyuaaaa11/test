@@ -19,6 +19,8 @@ export class UserController {
   }
   @Get('/', JWT.middleware())
   public async getIndex(req: Request, res: Response) {
+    if(!req.user) return
+    console.log('token', req.user.id)
     let result = await this.userService.getList();
     res.send(result);
   }
