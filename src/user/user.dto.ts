@@ -5,8 +5,8 @@ import { Transform } from 'class-transformer';
 export class UserDto{
   @IsNotEmpty({ message: '用户名不能为空' })
   @Transform((user) => user.value.trim())
-  name: String;
+  name: string;
 
   @IsNotEmpty({message: '密码不能为空'})
-  password: String;
+  password: string;
 }

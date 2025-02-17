@@ -22,7 +22,7 @@ export class UserService {
     const errors = await validate(userDto);
     console.log(errors, user);
     if (errors.length > 0) {
-      throw new Error(errors.toString());
+      return errors
     } else {
       return await this.PrismaDB.prisma.user.create({
         data: user
