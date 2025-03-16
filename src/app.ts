@@ -47,6 +47,6 @@ const app = server.build();
 // import UserRouter from './user/user.dto';
 // const app = express();
 // app.use('user', UserRouter);
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000');
+app.listen(706, () => {
+  console.log('Server is running on http://localhost:706');
 });
