@@ -11,7 +11,7 @@ export class TeachShareController{
   constructor(@inject(TeachShareService) private readonly teachShareService: TeachShareService) {
     console.log('TeachShare Controller Created');
   }
-  @Get('/', JWT.middleware())
+  @Get('/')
   public async getIndex(req: Request, res: Response) {
     let result = await this.teachShareService.getList();
     res.send(result)
@@ -21,5 +21,4 @@ export class TeachShareController{
     let result = await this.teachShareService.create(req.body)
     res.send(result)
   }
-  )
 }

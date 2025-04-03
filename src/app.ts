@@ -16,10 +16,17 @@ import { JWT } from './jwt';
 import { UserController } from './user/controller';
 import { UserService } from './user/service';
 
+// 引入teachShare模块
+import { TeachShareController } from './teachShare/controller';
+import { TeachShareService } from './teachShare/service';
+
 const container = new Container();
 // 注入user模块
 container.bind(UserController).to(UserController);
 container.bind(UserService).to(UserService);
+// 注入teachShare模块
+container.bind(TeachShareController).to(TeachShareController)
+container.bind(TeachShareService).to(TeachShareService)
 /*
 * 注入自定义工厂
 * 封装数据库模块并注入
