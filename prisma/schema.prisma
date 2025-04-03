@@ -29,3 +29,10 @@ model User {
   password String
   models Model[] // 一对多的关系
 }
+// 创建一个技术文章表 目前有两种类型 前端 后端
+model TeachShare {
+  id Int @id @default(autoincrement()) // 自增id
+  userId Int // 预留关联将userId关联到user表的id 暂定为liorian
+  title String
+  content String
+}

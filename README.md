@@ -41,7 +41,7 @@
 > passport-jwt passport的插件，支持使用json web token进行身份验证与授权<br>
 > jsonwebtoken 生成token的库<br>
 ## 启动项目
-
+nodemon run ./src/app.ts
 ## 技术栈
 
 
