@@ -6,7 +6,7 @@ import { inject } from 'inversify';
 import type { Request, Response } from 'express';
 import { JWT } from '../jwt';
 
-@controller('/teachShare')
+@controller('/api/teachShare')
 export class TeachShareController{
   constructor(@inject(TeachShareService) private readonly teachShareService: TeachShareService) {
     console.log('TeachShare Controller Created');

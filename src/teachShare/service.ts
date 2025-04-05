@@ -29,7 +29,10 @@ export class TeachShareService {
       return errors
     } else {
       let result = await this.PrismaDB.prisma.teachShare.create({
-        data: teachShare
+        data: {
+          ...teachShare,
+          userId: teachShare.userId ?? 1 // Replace 0 with a valid default userId if necessary
+        }
       })
       console.log(this.JWT.creatToken(result))
       return {
