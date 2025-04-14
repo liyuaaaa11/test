@@ -1,8 +1,14 @@
 declare namespace Express {
   export interface User {
     id: number,
-    name: string,
-    password: string
+    username: string,
+    password: string,
+    email: string,
+    role: number,
+    grade: String,
+    subject: String,
+    createdTime: Date,
+    updatedTime: Date,
   }
   export interface TeachShare {
     id: number,
