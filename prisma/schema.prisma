@@ -23,12 +23,23 @@ model Model {
   userId Int // 关联id 将userId关联到user表的id
 }
 // 创建user表 一个用户可以上传多个模型
+// 3D项目演示数据库内容
+// Updated User model with new relation to File model
 model User {
   id Int @id @default(autoincrement()) // 自增id
-  name String
+  username String
   password String
+  role Int
   models Model[] // 一对多的关系
+  email String
+  grade String
+  subject String
+  fils File[]
+  lessons Lesson[]
+  createTime DateTime @default(now())
+  updatedTime DateTime @default(now())
 }
+
 // 创建一个技术文章表 目前有两种类型 前端 后端
 model TeachShare {
   id Int @id @default(autoincrement()) // 自增id
@@ -36,3 +47,33 @@ model TeachShare {
   title String
   content String
 }
+
+// Updated File model with relation to User and renaming fields for consistency
+model File {
+    id Int @id @default(autoincrement()) // 自增id
+    filename String
+    type Int
+    fileUrl String @unique
+    lessons Lesson[]
+    userId Int // 关联id 将userId关联到User表的id
+    user User @relation(fields: [userId], references: [id])
+    createTime DateTime @default(now())
+    updatedTime DateTime @default(now())
+}
+
+// Updated Lesson model with correct relation to User and File
+model Lesson {
+  id Int @id @default(autoincrement()) // 自增id
+  name String
+  grade String
+  subject String
+  description String
+  content String
+  user User @relation(fields: [userId], references: [id]) // 外键
+  userId Int // 关联id 将userId关联到User表的id
+  file File @relation(fields: [fileId], references: [id])
+  fileId Int // 关联id 将fileId关联到File表的id
+  createTime DateTime @default(now())
+  updatedTime DateTime @default(now())
+}
+
