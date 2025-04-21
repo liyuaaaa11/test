@@ -2,6 +2,13 @@
   "name": "test",
   "version": "1.0.0",
   "description": "~~~",
+  "type": "module",
+  "scripts": {
+    "build": "tsc src/app.ts --outDir dist",
+    "start": "node dist/app.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "lint": "eslint . --ext .ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/liyuaaaa11/test.git"
