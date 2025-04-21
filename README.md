@@ -43,6 +43,7 @@
 ## 启动项目
 创建数据库表 prisma migrate dev <br>
 启动服务器 nodemon run ./src/app.ts
+* node无法直接运行ts文件，需要借助typescript将其转换为js文件或直接使用ts-node
 ## 技术栈
 
 
