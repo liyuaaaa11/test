@@ -9,16 +9,16 @@ import express from 'express';
 // 引入prisma/client  封装数据操作
 import { PrismaClient } from '@prisma/client';
 // 引入封装好的数据库模块
-import { PrismaDB } from './db';
-import { JWT } from './jwt';
+import { PrismaDB } from './db/index.js';
+import { JWT } from './jwt/index.js';
 
 // 引入user模块
-import { UserController } from './user/controller';
-import { UserService } from './user/service';
+import { UserController } from './user/controller.js';
+import { UserService } from './user/service.js';
 
 // 引入teachShare模块
-import { TeachShareController } from './teachShare/controller';
-import { TeachShareService } from './teachShare/service';
+import { TeachShareController } from './teachShare/controller.js';
+import { TeachShareService } from './teachShare/service.js';
 
 const container = new Container();
 // 注入user模块

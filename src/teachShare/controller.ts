@@ -1,10 +1,10 @@
 // 技术分享控制层 通过service层调用数据库
 import { controller, httpGet as Get, httpPost as Post } from 'inversify-express-utils';
-import { TeachShareService } from './service';
+import { TeachShareService } from './service.js';
 import { inject } from 'inversify';
 
 import type { Request, Response } from 'express';
-import { JWT } from '../jwt';
+import { JWT } from '../jwt/index.js';
 
 @controller('/api/teachShare')
 export class TeachShareController{

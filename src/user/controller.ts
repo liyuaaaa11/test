@@ -4,11 +4,11 @@
 import { controller, httpGet as Get, httpPost as Post } from 'inversify-express-utils';
 // 类似springboot
 // import { controller, httpGet as GetMapping, httpPost as PostMapping } from 'express';
-import { UserService } from './service';
+import { UserService } from './service.js';
 import { inject } from 'inversify';
 
 import type { Request, Response } from 'express';
-import { JWT } from '../jwt';
+import { JWT } from '../jwt/index.js';
 
 // 装饰器 类似路由可以接入路由地址
 @controller('/user')

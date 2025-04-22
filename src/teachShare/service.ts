@@ -2,11 +2,11 @@
 // 引入
 import { injectable, inject } from 'inversify';
 // 引入封装的数据库
-import { PrismaDB } from '../db';
-import { TeachShareDto } from './teachShare.dto';
+import { PrismaDB } from '../db/index.js';
+import { TeachShareDto } from './teachShare.dto.js';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
-import { JWT } from '../jwt';
+import { JWT } from '../jwt/index.js';
 
 @injectable()
 export class TeachShareService {

@@ -10,16 +10,20 @@ class User {
     console.log('User created');
     UserRouter.post('/create', async (req: express.Request, res: express.Response) => {
       console.log('User created', req.body);
-      const {name, password} = req.body;
-      const data = await prisma.user.create({
+      const {username, password, role, grade, subject, email} = req.body;
+      const result = await prisma.user.create({
         data: {
-          name,
-          password
+          username,
+          password,
+          role,
+          email,
+          grade,
+          subject
         }
       }).catch((e) => {
         console.log(e);
       });
-      res.send(data);
+      res.send(result);
     });
   }
   async get() {
@@ -43,7 +47,7 @@ class User {
           id: Number(req.body.id)
         },
         data: {
-          name: req.body.name,
+          username: req.body.name,
           password: req.body.password
         }
       });

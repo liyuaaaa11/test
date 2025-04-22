@@ -2,9 +2,19 @@
   "presets": [
     ["@babel/preset-env", {
       "targets": {
+        "node": "current",
         "esmodules": true
       }
     }]
   ],
-  "plugins": ["@babel/plugin-proposal-class-properties"]
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    ["module-resolver", {
+      "root": ["./"],
+      "alias": {
+        "@root": "./",
+        "@": "./src"
+      }
+    }]
+  ]
 }

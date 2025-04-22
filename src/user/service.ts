@@ -1,11 +1,11 @@
 // 提供注射器
 import { injectable, inject } from 'inversify';
 // 引入封装的数据库
-import { PrismaDB } from '../db';
-import { UserDto } from './user.dto';
+import { PrismaDB } from '../db/index.js';
+import { UserDto } from './user.dto.js';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
-import { JWT } from '../jwt';
+import { JWT } from '../jwt/index.js';
 // 通过装饰器注入
 @injectable()
 export class UserService {
