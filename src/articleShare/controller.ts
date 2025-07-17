@@ -1,24 +1,26 @@
 // 技术分享控制层 通过service层调用数据库
 import { controller, httpGet as Get, httpPost as Post } from 'inversify-express-utils';
-import { TeachShareService } from './service.js';
+import {
+  ArticleShareService
+} from './service.js';
 import { inject } from 'inversify';
 
 import type { Request, Response } from 'express';
 import { JWT } from '../jwt/index.js';
 
 @controller('/api/teachShare')
-export class TeachShareController{
-  constructor(@inject(TeachShareService) private readonly teachShareService: TeachShareService) {
-    console.log('TeachShare Controller Created');
+export class ArticleShareController{
+  constructor(@inject(ArticleShareService) private readonly articleShareService: ArticleShareService) {
+    console.log('ArticleShare Controller Created');
   }
   @Get('/list')
   public async getIndex(req: Request, res: Response) {
-    let result = await this.teachShareService.getList();
+    let result = await this.articleShareService.getList();
     res.send(result)
   }
   @Post('/create')
   public async create(req: Request, res: Response) {
-    let result = await this.teachShareService.create(req.body)
+    let result = await this.articleShareService.create(req.body)
     res.send(result)
   }
 }

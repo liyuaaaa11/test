@@ -19,8 +19,8 @@ import { UserController } from './user/controller.js';
 import { UserService } from './user/service.js';
 
 // 引入teachShare模块
-import { TeachShareController } from './teachShare/controller.js';
-import { TeachShareService } from './teachShare/service.js';
+import { ArticleShareController } from './articleShare/controller.js';
+import { ArticleShareService } from './articleShare/service.js';
 import exp from 'constants';
 
 const container = new Container();
@@ -28,8 +28,8 @@ const container = new Container();
 container.bind(UserController).to(UserController);
 container.bind(UserService).to(UserService);
 // 注入teachShare模块
-container.bind(TeachShareController).to(TeachShareController)
-container.bind(TeachShareService).to(TeachShareService)
+container.bind(ArticleShareController).to(ArticleShareController)
+container.bind(ArticleShareService).to(ArticleShareService)
 /*
 * 注入自定义工厂
 * 封装数据库模块并注入

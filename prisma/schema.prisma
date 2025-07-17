@@ -41,11 +41,15 @@ model User {
 }
 
 // 创建一个技术文章表 目前有两种类型 前端 后端
-model TeachShare {
+model ArticleShare {
   id Int @id @default(autoincrement()) // 自增id
   userId Int // 预留关联将userId关联到user表的id 暂定为liorian
+  type Int
   title String
+  desc String
   content String
+  createTime DateTime @default(now())
+  updatedTime DateTime @default(now())
 }
 
 // Updated File model with relation to User and renaming fields for consistency

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "~~~",
   "scripts": {
+    "db:start": "prisma migrate dev",
     "rimraf": "./node_modules/rimraf/bin.js",
     "clean": "rimraf dist",
     "build": "tsc",
