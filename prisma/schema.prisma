@@ -47,7 +47,7 @@ model ArticleShare {
   type Int
   title String
   desc String
-  content String
+  content Json
   createTime DateTime @default(now())
   updatedTime DateTime @default(now())
 }
