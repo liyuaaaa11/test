@@ -23,4 +23,9 @@ export class ArticleShareController{
     let result = await this.articleShareService.create(req.body)
     res.send(result)
   }
+  @Post('update')
+  public async update(req: Request, res: Response) {
+    let result = await this.articleShareService.update(req.body)
+    res.send(result)
+  }
 }

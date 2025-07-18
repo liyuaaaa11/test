@@ -102,4 +102,32 @@ export class ArticleShareService {
       }
     }
   }
+  public async update(articleShare: ArticleShareDto) {
+    let articleShareDto = plainToClass(ArticleShareDto, articleShare)
+    const errors = await validate(articleShareDto)
+    if (errors.length > 0) {
+      return errors
+    } else {
+      const data = {
+        id: articleShareDto.id,
+        title: articleShareDto.title,
+        desc: articleShareDto.desc,
+        userId: 1, // 如果没有传userId则默认为0
+        type: articleShareDto.type || 0, // 如果没有传type则默认为0
+        content: articleShareDto.content || '' // 如果没有传content则默认为空字符串
+      };
+      // 更新articlesharedto.id的数据信息
+      let result = await this.PrismaDB.prisma.articleShare.update({
+        where: { id: articleShareDto.id },
+        data
+      })
+      console.log('result*************');
+      console.log(result);
+      // 返回结果
+      return {
+        ...result,
+        token: this.JWT.creatToken(result)
+      }
+    }
+  }
 }
