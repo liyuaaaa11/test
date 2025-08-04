@@ -58,20 +58,15 @@ export class ArticleShareService {
     });
     console.log('data*************');
     console.log(data);
-    return [
-      {
-        id: 1,
-        type: 1,
-        name: '前端',
-        list: data[1] || [] // 如果没有前端文章则返回空数组
+    return {
+      code: 200,
+      list: [{
+        id: 1, type: 1, name: '前端', list: data[1] || [] // 如果没有前端文章则返回空数组
       },
       {
-        id: 2,
-        type: 2,
-        name: '后端',
-        list: data[2] || [] // 如果没有后端文章则返回空数组
-      },
-    ]
+        id: 2, type: 2, name: '后端', list: data[2] || [] // 如果没有后端文章则返回空数组
+      }]
+    }
   }
   public async create(articleShare: ArticleShareDto) {
     // 将最后的结果合并到UserDto中
@@ -139,6 +134,19 @@ export class ArticleShareService {
           ...result
         }
       }
+    }
+  }
+  public async detail(res) {
+    // 根据文章id 文章类型type查询具体内容
+    const result = await this.PrismaDB.prisma.articleShare.findMany({
+      where: {
+        id: res.id,
+        type: res.type
+      }
+    })
+    return {
+      code: 200,
+      data: {...result[0]}
     }
   }
 }

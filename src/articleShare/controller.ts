@@ -16,6 +16,7 @@ export class ArticleShareController{
   @Get('/list')
   public async getIndex(req: Request, res: Response) {
     let result = await this.articleShareService.getList();
+    res.statusCode = result.code
     res.send(result)
   }
   @Post('/create')
@@ -28,6 +29,12 @@ export class ArticleShareController{
   public async update(req: Request, res: Response) {
     let result = await this.articleShareService.update(req.body)
     res.statusCode = result.code
+    res.send(result)
+  }
+  @Get('/detail')
+  public async detail(req: Request, res: Response) {
+    let result = await this.articleShareService.detail(req.params)
+    res.sendStatus = result.code
     res.send(result)
   }
 }
