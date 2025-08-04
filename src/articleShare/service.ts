@@ -79,9 +79,15 @@ export class ArticleShareService {
     // 验证参数是否合法
     const errors = await validate(articleShareDto);
     console.log('errors*************', errors.length);
-    console.log(errors, articleShare);
     if (errors.length > 0) {
-      return errors
+      const errMessage = errors.map(err => {
+        const objkeys = Object.keys(err.constraints)
+        return err.constraints[objkeys[0]]
+      })
+      return {
+        code: 400,
+        message: errMessage
+      }
     } else {
       const data = {
         title: articleShareDto.title,
@@ -93,12 +99,12 @@ export class ArticleShareService {
       let result = await this.PrismaDB.prisma.articleShare.create({
         data: data
       })
-      console.log('result*************');
-      console.log(result);
       // 返回结果
       return {
-        ...result,
-        token: this.JWT.creatToken(result)
+        code: 200,
+        data: {
+          ...result
+        }
       }
     }
   }
@@ -106,7 +112,10 @@ export class ArticleShareService {
     let articleShareDto = plainToClass(ArticleShareDto, articleShare)
     const errors = await validate(articleShareDto)
     if (errors.length > 0) {
-      return errors
+      return {
+        code: 400,
+        message: errors[0].constraints
+      }
     } else {
       const data = {
         id: articleShareDto.id,
@@ -125,8 +134,10 @@ export class ArticleShareService {
       console.log(result);
       // 返回结果
       return {
-        ...result,
-        token: this.JWT.creatToken(result)
+        code: 200,
+        data: {
+          ...result
+        }
       }
     }
   }

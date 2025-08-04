@@ -21,11 +21,13 @@ export class ArticleShareController{
   @Post('/create')
   public async create(req: Request, res: Response) {
     let result = await this.articleShareService.create(req.body)
+    res.statusCode = result.code
     res.send(result)
   }
   @Post('update')
   public async update(req: Request, res: Response) {
     let result = await this.articleShareService.update(req.body)
+    res.statusCode = result.code
     res.send(result)
   }
 }
