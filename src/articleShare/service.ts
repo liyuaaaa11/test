@@ -149,4 +149,12 @@ export class ArticleShareService {
       data: {...result[0]}
     }
   }
+  public async delete(res) {
+    const result = await this.PrismaDB.prisma.articleShare.delete({
+      where: {
+        id: res.id,
+        type: res.type
+      }
+    })
+  }
 }
