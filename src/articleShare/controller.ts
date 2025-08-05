@@ -34,7 +34,7 @@ export class ArticleShareController{
   @Get('/detail')
   public async detail(req: Request, res: Response) {
     let result = await this.articleShareService.detail(req.params)
-    res.sendStatus = result.code
+    res.statusCode = result.code
     res.send(result)
   }
 }
