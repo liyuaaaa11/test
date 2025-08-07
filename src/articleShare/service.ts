@@ -138,23 +138,28 @@ export class ArticleShareService {
   }
   public async detail(res) {
     // 根据文章id 文章类型type查询具体内容
-    const result = await this.PrismaDB.prisma.articleShare.findMany({
+    const result = await this.PrismaDB.prisma.articleShare.findFirst({
       where: {
-        id: res.id,
-        type: res.type
+        id: Number(res.id),
+        type: Number(res.type)
       }
     })
+    console.log(result)
     return {
       code: 200,
-      data: {...result[0]}
+      data: {...result}
     }
   }
   public async delete(res) {
     const result = await this.PrismaDB.prisma.articleShare.delete({
       where: {
-        id: res.id,
-        type: res.type
+        id: res.id
       }
     })
+    console.log(result)
+    return {
+      code: 200,
+      data: {...result}
+    }
   }
 }
