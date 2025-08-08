@@ -40,7 +40,7 @@ export class ArticleShareController{
   }
   @Post('delete')
   public async delete(req: Request, res: Response) {
-    let result = await this, articleShareService.delete (req.body)
+    let result = await this.articleShareService.delete(req.body)
     res.statusCode = result.code
     res.send(result)
   }

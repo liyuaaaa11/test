@@ -153,7 +153,7 @@ export class ArticleShareService {
   public async delete(res) {
     const result = await this.PrismaDB.prisma.articleShare.delete({
       where: {
-        id: res.id
+        id: Number(res.id)
       }
     })
     console.log(result)
