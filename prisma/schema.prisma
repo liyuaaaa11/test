@@ -48,6 +48,7 @@ model ArticleShare {
   title String
   desc String
   content Json
+  isDelete Boolean
   createTime DateTime @default(now())
   updatedTime DateTime @default(now())
 }

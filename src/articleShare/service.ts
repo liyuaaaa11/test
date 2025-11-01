@@ -85,6 +85,7 @@ export class ArticleShareService {
       }
     } else {
       const data = {
+        isDelete: false,
         title: articleShareDto.title,
         desc: articleShareDto.desc,
         userId: 1, // 如果没有传userId则默认为0
@@ -151,9 +152,12 @@ export class ArticleShareService {
     }
   }
   public async delete(res) {
-    const result = await this.PrismaDB.prisma.articleShare.delete({
+    const result = await this.PrismaDB.prisma.articleShare.update({
       where: {
         id: Number(res.id)
+      },
+      data: {
+        isDelete: true
       }
     })
     console.log(result)
