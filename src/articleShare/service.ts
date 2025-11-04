@@ -31,9 +31,9 @@ export class ArticleShareService {
 
     const data = await this.PrismaDB.prisma.articleShare.findMany({
       where: {
-        type: { in: [1, 2]
-        }
-      },
+        type: { in: [1, 2] },
+        isDelete: false
+      },  
       orderBy: {
         createTime: 'desc'
       },
